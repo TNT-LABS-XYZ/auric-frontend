@@ -1,0 +1,12 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group">
+<path id="Vector" d="M4 0C1.791 0 0 1.791 0 4V12H15V0H4Z" fill="var(--fill-0, white)"/>
+<path id="Vector_2" d="M30 4C30 1.791 28.209 0 26 0H15V12H30V4Z" fill="var(--fill-0, #C92D25)"/>
+<path id="Vector_3" d="M4 24C1.791 24 0 22.209 0 20V12H15V24H4Z" fill="var(--fill-0, #081D53)"/>
+<path id="Vector_4" d="M30 20C30 22.209 28.209 24 26 24H15V12H30V20Z" fill="var(--fill-0, white)"/>
+<path id="Vector_5" opacity="0.15" d="M26 0H4C1.791 0 0 1.791 0 4V20C0 22.209 1.791 24 4 24H26C28.209 24 30 22.209 30 20V4C30 1.791 28.209 0 26 0ZM29 20C29 21.654 27.654 23 26 23H4C2.346 23 1 21.654 1 20V4C1 2.346 2.346 1 4 1H26C27.654 1 29 2.346 29 4V20Z" fill="var(--fill-0, black)"/>
+<path id="Vector_6" opacity="0.2" d="M26 1H4C2.343 1 1 2.343 1 4V5C1 3.343 2.343 2 4 2H26C27.657 2 29 3.343 29 5V4C29 2.343 27.657 1 26 1Z" fill="var(--fill-0, white)"/>
+<path id="Vector_7" d="M7.81152 2.6709L6.98552 5.2139H4.31152L6.47552 6.7859L5.64852 9.3289L7.81152 7.7569L9.97552 9.3289L9.14852 6.7859L11.3115 5.2139H8.63852L7.81152 2.6709Z" fill="var(--fill-0, #081D53)"/>
+<path id="Vector_8" d="M21.9365 13.9839L21.1105 16.5269H18.4365L20.6005 18.0979L19.7735 20.6409L21.9365 19.0699L24.1005 20.6409L23.2735 18.0979L25.4365 16.5269H22.7635L21.9365 13.9839Z" fill="var(--fill-0, #C92D25)"/>
+</g>
+</svg>
