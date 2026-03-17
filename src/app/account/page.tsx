@@ -10,8 +10,14 @@ const STORAGE_KEY = 'auric_account'
 interface Account {
   user_id: string
   api_key: string
-  wallet_address: string
+  smart_account_address: string
   telegram_token: string | null
+}
+
+interface UserProfile {
+  smart_account_address: string
+  created_at: string
+  telegram: { chat_id: number; username: string; linked_at: string } | null
 }
 
 interface Strategy {
@@ -37,7 +43,7 @@ async function createAccount(): Promise<Account> {
   return {
     user_id: data.user_id,
     api_key: data.api_key,
-    wallet_address: data.wallet_address,
+    smart_account_address: data.smart_account_address,
     telegram_token: data.telegram_token,
   }
 }
@@ -59,6 +65,14 @@ async function fetchStrategies(apiKey: string): Promise<Strategy[]> {
     headers: { 'x-api-key': apiKey },
   })
   if (!res.ok) return []
+  return res.json()
+}
+
+async function fetchUserProfile(apiKey: string): Promise<UserProfile | null> {
+  const res = await fetch(`${API_URL}/users/me`, {
+    headers: { 'x-api-key': apiKey },
+  })
+  if (!res.ok) return null
   return res.json()
 }
 
@@ -259,6 +273,7 @@ export default function AccountPage() {
   const [strategies, setStrategies] = useState<Strategy[]>([])
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [telegramLinked, setTelegramLinked] = useState(false)
+  const [telegramUsername, setTelegramUsername] = useState<string | null>(null)
 
   const isZeroBalance = balance != null && balance.xaut === 0 && balance.usdt === 0
   const visibleStrategies = strategies.filter((s) => s.status !== 'cancelled')
@@ -279,13 +294,23 @@ export default function AccountPage() {
   }, [])
 
   const loadDashboard = async (apiKey: string) => {
-    const [{ balance: b, price: p }, strats] = await Promise.all([
+    const [{ balance: b, price: p }, strats, profile] = await Promise.all([
       fetchBalances(apiKey),
       fetchStrategies(apiKey),
+      fetchUserProfile(apiKey),
     ])
     if (b) setBalance(b)
     if (p != null) setPrice(p)
     setStrategies(strats)
+    if (profile) {
+      if (profile.smart_account_address) {
+        setAccount((prev) => prev ? { ...prev, smart_account_address: profile.smart_account_address } : prev)
+      }
+      if (profile.telegram) {
+        setTelegramLinked(true)
+        setTelegramUsername(profile.telegram.username)
+      }
+    }
   }
 
   const handleCreate = async () => {
@@ -323,6 +348,7 @@ export default function AccountPage() {
     setPrice(null)
     setStrategies([])
     setTelegramLinked(false)
+    setTelegramUsername(null)
     setDetailsOpen(false)
     setStep(0)
   }
@@ -400,10 +426,10 @@ export default function AccountPage() {
                   <WalletIcon />
                   Your Wallet Address
                 </div>
-                <CopyButton value={account.wallet_address} />
+                <CopyButton value={account.smart_account_address} />
               </div>
               <div className="text-sm font-medium font-mono text-[#201F1D] bg-white rounded-lg px-3.5 py-2.5 break-all leading-relaxed">
-                {account.wallet_address}
+                {account.smart_account_address}
               </div>
               <p className="text-xs text-[#6B6A66] mt-2">Gas is sponsored. You only need USDT.</p>
             </div>
@@ -458,9 +484,9 @@ export default function AccountPage() {
                 </div>
                 <div className="flex items-center justify-between bg-white rounded-lg px-3.5 py-2.5">
                   <span className="text-[13px] font-medium font-mono text-[#201F1D]">
-                    {account.wallet_address.slice(0, 10)}...{account.wallet_address.slice(-8)}
+                    {account.smart_account_address.slice(0, 10)}...{account.smart_account_address.slice(-8)}
                   </span>
-                  <CopyButton value={account.wallet_address} />
+                  <CopyButton value={account.smart_account_address} />
                 </div>
               </div>
             )}
@@ -558,12 +584,20 @@ export default function AccountPage() {
                       <TelegramIcon />
                       Connect Telegram
                     </a>
-                    <button
-                      onClick={handleRefreshToken}
-                      className="block text-xs text-[#96938E] hover:text-[#6B6A66] mt-2 cursor-pointer"
-                    >
-                      Generate a new token
-                    </button>
+                    <div className="flex items-center justify-between mt-2">
+                      <button
+                        onClick={() => void loadDashboard(account.api_key)}
+                        className="text-xs text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer"
+                      >
+                        I&apos;ve connected — refresh
+                      </button>
+                      <button
+                        onClick={handleRefreshToken}
+                        className="text-xs text-[#96938E] hover:text-[#6B6A66] transition-colors cursor-pointer"
+                      >
+                        Generate a new token
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <button
@@ -577,7 +611,9 @@ export default function AccountPage() {
             ) : (
               <div className="bg-[#F5F4F2] rounded-xl px-4 py-3 mb-3 border-l-[3px] border-[#00B97D]">
                 <p className="text-sm font-medium text-[#201F1D] mb-0.5">Telegram linked</p>
-                <p className="text-[13px] text-[#6B6A66]">You&apos;ll receive confirmations after each execution.</p>
+                <p className="text-[13px] text-[#6B6A66]">
+                  {telegramUsername ? `@${telegramUsername}` : 'You\'ll receive confirmations after each execution.'}
+                </p>
               </div>
             )}
 
@@ -601,10 +637,10 @@ export default function AccountPage() {
                       <WalletIcon />
                       Smart Wallet
                     </div>
-                    <CopyButton value={account.wallet_address} />
+                    <CopyButton value={account.smart_account_address} />
                   </div>
                   <div className="text-sm font-medium font-mono text-[#201F1D] bg-[#F5F4F2] rounded-lg px-3.5 py-2.5 break-all leading-relaxed">
-                    {account.wallet_address}
+                    {account.smart_account_address}
                   </div>
                 </div>
 

@@ -25,7 +25,7 @@ export async function POST() {
     return NextResponse.json({
       user_id: res.data.user_id,
       api_key: res.data.api_key,
-      wallet_address: res.data.wallet_address,
+      smart_account_address: res.data.smart_account_address,
       telegram_token,
     })
     
