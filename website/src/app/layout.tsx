@@ -4,7 +4,7 @@ import { EB_Garamond } from "next/font/google";
 import "./globals.css";
 
 const interDisplay = localFont({
-  src: "../../public/fonts/InterDisplay.var.woff2",
+  src: "./fonts/InterDisplay.var.woff2",
   variable: "--font-inter",
   display: "swap",
 });
