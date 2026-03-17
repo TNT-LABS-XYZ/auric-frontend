@@ -177,12 +177,12 @@ function LanguageToggle({
 }
 
 export default function Home() {
-  const [lang, setLang] = useState<Lang>(() => {
-    if (typeof window !== "undefined") {
-      return (localStorage.getItem("lang") as Lang) || "en";
-    }
-    return "en";
-  });
+  const [lang, setLang] = useState<Lang>("en");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("lang") as Lang;
+    if (saved && saved !== lang) setLang(saved);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("lang", lang);
