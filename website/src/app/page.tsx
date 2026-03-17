@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import { t, type Lang } from "./translations";
 
 const CHECK_ICON = "/images/check-icon.svg";
 
@@ -46,7 +50,7 @@ function ScheduleVisual() {
 
 function PriceTriggerVisual() {
   return (
-    <div className="w-full lg:w-[421px] shrink-0 backdrop-blur-xl bg-[rgba(32,31,29,0.81)] rounded-b-2xl lg:rounded-bl-none lg:rounded-l-2xl overflow-hidden px-[23px] py-[19px] flex flex-col justify-between min-h-[200px]">
+    <div className="w-full lg:w-[421px] shrink-0 backdrop-blur-xl bg-[rgba(32,31,29,0.81)] rounded-b-2xl lg:rounded-br-none lg:rounded-l-2xl overflow-hidden px-[23px] py-[19px] flex flex-col justify-between min-h-[200px]">
       <div className="flex gap-2 items-start">
         <Image src="/images/trigger-icon.svg" alt="" width={16} height={16} />
         <span className="text-sm font-medium text-[#96938e]">Price Trigger</span>
@@ -116,12 +120,12 @@ function GoalVisual() {
 
 function TelegramVisual() {
   return (
-    <div className="w-full lg:w-[421px] shrink-0 backdrop-blur-xl bg-[rgba(32,31,29,0.81)] rounded-b-2xl lg:rounded-bl-none lg:rounded-l-2xl overflow-hidden px-[23px] py-[19px] flex flex-col gap-6 h-[272px]">
+    <div className="w-full lg:w-[421px] shrink-0 backdrop-blur-xl bg-[rgba(32,31,29,0.81)] rounded-b-2xl lg:rounded-br-none lg:rounded-l-2xl overflow-hidden px-[23px] py-[19px] flex flex-col gap-6 h-[272px]">
       <div className="flex gap-2 items-center pb-4 border-b border-[rgba(255,255,255,0.06)]">
         <div className="w-6 h-6 rounded-full bg-[rgba(0,0,0,0.25)] flex items-center justify-center">
           <Image src="/images/auric-small.svg" alt="" width={16} height={10} />
         </div>
-        <span className="text-sm font-medium text-[#e4ddd7]">Auric Bot</span>
+        <span className="text-sm font-medium text-[#e4ddd7]">Auric</span>
       </div>
       <div className="flex flex-col gap-2 flex-1">
         <div className="flex items-center">
@@ -174,7 +178,27 @@ function FlagRow({ order }: { order: number[] }) {
   );
 }
 
+function LanguageToggle({
+  lang,
+  onChange,
+}: {
+  lang: Lang;
+  onChange: (l: Lang) => void;
+}) {
+  return (
+    <button
+      onClick={() => onChange(lang === "en" ? "es" : "en")}
+      className="text-sm font-medium text-white/70 hover:text-white transition-colors px-2 py-1"
+    >
+      {lang === "en" ? "ES" : "EN"}
+    </button>
+  );
+}
+
 export default function Home() {
+  const [lang, setLang] = useState<Lang>("en");
+  const l = (obj: { en: string; es: string }) => obj[lang];
+
   return (
     <main className="bg-white w-full overflow-hidden">
       {/* XAU₮ watermark */}
@@ -205,7 +229,7 @@ export default function Home() {
         </div>
 
         {/* Nav */}
-        <nav className="relative z-10 flex items-center justify-between px-4 md:px-9 pt-6">
+        <nav className="relative z-20 flex items-center justify-between px-4 md:px-9 pt-6">
           <div className="flex gap-2 items-center">
             <Image
               src="/images/logo-icon.svg"
@@ -225,28 +249,34 @@ export default function Home() {
               href="#how-it-works"
               className="px-2 py-2 text-sm font-medium text-white"
             >
-              How it works
+              {l(t.nav.howItWorks)}
             </a>
             <a
               href="#features"
               className="px-2 py-2 text-sm font-medium text-white w-[114px] text-center"
             >
-              Features
+              {l(t.nav.features)}
             </a>
             <a
               href="#why-xaut"
               className="px-2 py-2 text-sm font-medium text-white w-[114px] text-center"
             >
-              {`Why XAU₮`}
+              {l(t.nav.whyXaut)}
+            </a>
+            <LanguageToggle lang={lang} onChange={setLang} />
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="md:hidden">
+              <LanguageToggle lang={lang} onChange={setLang} />
+            </div>
+            <a
+              href="#cta"
+              className="bg-[#fef9f4] text-[#1d1c1a] font-medium text-sm md:text-base px-3 md:px-4 py-2 md:py-3 rounded-full h-[36px] md:h-[44px] flex items-center tracking-[-0.1px]"
+            >
+              <span className="hidden md:inline">{l(t.nav.cta)}</span>
+              <span className="md:hidden">{l(t.nav.ctaMobile)}</span>
             </a>
           </div>
-          <a
-            href="#cta"
-            className="bg-[#fef9f4] text-[#1d1c1a] font-medium text-sm md:text-base px-3 md:px-4 py-2 md:py-3 rounded-full h-[36px] md:h-[44px] flex items-center tracking-[-0.1px]"
-          >
-            <span className="hidden md:inline">Start Accumulating &rarr;</span>
-            <span className="md:hidden">Get Started &rarr;</span>
-          </a>
         </nav>
 
         {/* Hero Content */}
@@ -254,19 +284,17 @@ export default function Home() {
           <div className="flex flex-col gap-6 md:gap-8 items-center text-center max-w-[557px]">
             <div className="flex flex-col gap-4 md:gap-[25px] items-center w-full">
               <h1 className="text-[36px] md:text-[52px] lg:text-[64px] font-medium leading-[1.1] md:leading-[70px] text-[#fef9f4]">
-                Gold that works while you sleep.
+                {l(t.hero.headline)}
               </h1>
               <p className="text-base md:text-xl font-medium text-[#fff3e9] max-w-[443px]">
-                Set your accumulation rules once. Auric monitors XAU&#x20AE;
-                markets, evaluates your conditions, and executes on-chain &mdash;
-                while you sleep.
+                {l(t.hero.sub)}
               </p>
             </div>
             <a
-              href="#"
+              href="#cta"
               className="bg-[#fef9f4] text-[#1d1c1a] font-medium text-base px-4 py-3 rounded-full h-[44px] flex items-center tracking-[-0.1px]"
             >
-              Open Telegram
+              {l(t.hero.cta)}
             </a>
           </div>
         </div>
@@ -277,11 +305,11 @@ export default function Home() {
         <div className="mb-8 md:mb-12">
           <div className="bg-[#f6f6f6] inline-flex items-center justify-center px-2 py-1.5 rounded-full mb-4 md:mb-6">
             <span className="text-sm font-medium text-[#939393] tracking-[-0.1px]">
-              Features
+              {l(t.features.label)}
             </span>
           </div>
           <h2 className="text-[28px] md:text-[40px] font-medium text-[#201f1d] leading-normal max-w-[459px]">
-            Everything to automate your gold savings.
+            {l(t.features.heading)}
           </h2>
         </div>
 
@@ -290,19 +318,14 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row lg:items-stretch w-full">
             <div className="flex-1 flex flex-col gap-4 p-6 md:p-10 bg-[#fcfcfb] rounded-t-2xl lg:rounded-tr-none lg:rounded-l-2xl min-w-0">
               <h3 className="text-2xl md:text-[32px] font-medium leading-normal text-[#201f1d]">
-                DCA schedules
+                {l(t.features.dca.title)}
               </h3>
               <p className="text-base text-[#939393] tracking-[-0.16px] leading-normal">
-                Set a recurring amount and Auric automatically buys Tether Gold
-                (XAU&#x20AE;) at your chosen cadence.
+                {l(t.features.dca.desc)}
               </p>
-              <CheckItem>
-                Weekly, bi-weekly, or monthly &mdash; your choice
-              </CheckItem>
-              <CheckItem>
-                {`Runs silently on autopilot — you're notified after each buy`}
-              </CheckItem>
-              <CheckItem>Adjust or pause any time from Telegram</CheckItem>
+              <CheckItem>{l(t.features.dca.check1)}</CheckItem>
+              <CheckItem>{l(t.features.dca.check2)}</CheckItem>
+              <CheckItem>{l(t.features.dca.check3)}</CheckItem>
             </div>
             <ScheduleVisual />
           </div>
@@ -312,19 +335,14 @@ export default function Home() {
             <PriceTriggerVisual />
             <div className="flex-1 flex flex-col gap-4 p-6 md:p-10 bg-[#fcfcfb] rounded-t-2xl lg:rounded-tl-none lg:rounded-r-2xl min-w-0">
               <h3 className="text-2xl md:text-[32px] font-medium leading-normal text-[#201f1d]">
-                Price Triggers
+                {l(t.features.priceTrigger.title)}
               </h3>
               <p className="text-base text-[#939393] tracking-[-0.16px] leading-normal">
-                Define a dip threshold and Auric buys the moment XAU&#x20AE; hits
-                it. Capitalise on market moves automatically.
+                {l(t.features.priceTrigger.desc)}
               </p>
-              <CheckItem>Set any price level as your trigger</CheckItem>
-              <CheckItem>
-                {`Instant settlement through Tether's infrastructure`}
-              </CheckItem>
-              <CheckItem>
-                Set multiple triggers, each with its own buy amount
-              </CheckItem>
+              <CheckItem>{l(t.features.priceTrigger.check1)}</CheckItem>
+              <CheckItem>{l(t.features.priceTrigger.check2)}</CheckItem>
+              <CheckItem>{l(t.features.priceTrigger.check3)}</CheckItem>
             </div>
           </div>
 
@@ -332,17 +350,14 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row lg:items-stretch w-full">
             <div className="flex-1 flex flex-col gap-4 p-6 md:p-10 bg-[#fcfcfb] rounded-t-2xl lg:rounded-tr-none lg:rounded-l-2xl min-w-0">
               <h3 className="text-2xl md:text-[32px] font-medium leading-normal text-[#201f1d]">
-                Goal-based saving
+                {l(t.features.goal.title)}
               </h3>
               <p className="text-base text-[#939393] tracking-[-0.16px] leading-normal">
-                Set a target in XAU&#x20AE; &mdash; say, 1 oz of gold &mdash; and
-                let Auric accumulate until you reach it.
+                {l(t.features.goal.desc)}
               </p>
-              <CheckItem>
-                Target in XAU&#x20AE; or USD equivalent
-              </CheckItem>
-              <CheckItem>Tracks progress in real time</CheckItem>
-              <CheckItem>Notifies you the moment you hit your goal</CheckItem>
+              <CheckItem>{l(t.features.goal.check1)}</CheckItem>
+              <CheckItem>{l(t.features.goal.check2)}</CheckItem>
+              <CheckItem>{l(t.features.goal.check3)}</CheckItem>
             </div>
             <GoalVisual />
           </div>
@@ -352,17 +367,14 @@ export default function Home() {
             <TelegramVisual />
             <div className="flex-1 flex flex-col gap-4 p-6 md:p-10 bg-[#fcfcfb] rounded-t-2xl lg:rounded-tl-none lg:rounded-r-2xl min-w-0">
               <h3 className="text-2xl md:text-[32px] font-medium leading-normal text-[#201f1d]">
-                Telegram interface
+                {l(t.features.telegram.title)}
               </h3>
               <p className="text-base text-[#939393] tracking-[-0.16px] leading-normal">
-                Everything lives in Telegram. Define rules, check your balance, and
-                get execution confirmations &mdash; no app needed.
+                {l(t.features.telegram.desc)}
               </p>
-              <CheckItem>Bot-guided setup in under 2 minutes</CheckItem>
-              <CheckItem>Instant notifications on every execution</CheckItem>
-              <CheckItem>
-                /status, /pause, /history, /withdraw commands
-              </CheckItem>
+              <CheckItem>{l(t.features.telegram.check1)}</CheckItem>
+              <CheckItem>{l(t.features.telegram.check2)}</CheckItem>
+              <CheckItem>{l(t.features.telegram.check3)}</CheckItem>
             </div>
           </div>
         </div>
@@ -393,14 +405,11 @@ export default function Home() {
 
         <div className="text-center mt-8 md:mt-12 px-5">
           <h2 className="text-2xl md:text-4xl font-medium text-[#201f1d]">
-            The next step beyond USDT in Latin America.
+            {l(t.whyXaut.heading)}
           </h2>
           <p className="max-w-[601px] mx-auto mt-4 md:mt-6 text-sm md:text-base font-medium text-[#96938e] leading-normal">
-            In Latin America, USDT helps people shield their savings from
-            inflation. XAU&#x20AE; is the next logical step &mdash; gold-backed,
-            borderless, and settled on-chain.{" "}
-            <span className="text-[#201f1d]">Auric</span> automates this,
-            allowing your gold position to grow while you focus on other things.
+            {l(t.whyXaut.body)}{" "}
+            <span className="text-[#201f1d]">{l(t.whyXaut.bodyHighlight)}</span>
           </p>
         </div>
       </section>
@@ -410,36 +419,21 @@ export default function Home() {
         <div className="py-6 md:py-8">
           <div className="bg-[#f6f6f6] inline-flex items-center justify-center px-2 py-1.5 rounded-full mb-4 md:mb-6">
             <span className="text-sm font-medium text-[#939393] tracking-[-0.1px]">
-              How it works
+              {l(t.howItWorks.label)}
             </span>
           </div>
           <h2 className="text-[28px] md:text-[40px] font-medium text-[#201f1d] leading-normal">
-            Set it up once.
+            {l(t.howItWorks.heading1)}
             <br />
-            Let it compound.
+            {l(t.howItWorks.heading2)}
           </h2>
         </div>
 
         <div className="flex flex-col gap-4 md:gap-6">
           {[
-            {
-              num: "01",
-              title: "Define your strategy",
-              desc: "Set a DCA schedule, configure price-trigger buys, or define a savings goal. Auric understands your intent, not just your instructions.",
-              border: true,
-            },
-            {
-              num: "02",
-              title: "Fund your wallet",
-              desc: "Self-custodial from day one. Your seed phrase stays with you \u2014 private keys are derived on-demand and never stored.",
-              border: true,
-            },
-            {
-              num: "03",
-              title: "Auric runs",
-              desc: "Auric monitors XAU\u20AE conditions continuously, evaluates your rules, and settles on-chain through Tether\u2019s infrastructure. You just watch it grow.",
-              border: false,
-            },
+            { num: "01", ...t.howItWorks.step1, border: true },
+            { num: "02", ...t.howItWorks.step2, border: true },
+            { num: "03", ...t.howItWorks.step3, border: false },
           ].map((step) => (
             <div
               key={step.num}
@@ -452,11 +446,11 @@ export default function Home() {
               </div>
               <div className="flex-1 flex flex-col gap-4 md:gap-6 overflow-hidden">
                 <p className="text-xl md:text-2xl font-medium text-[#1d1c1a] tracking-[-0.24px]">
-                  {step.title}
+                  {l(step.title)}
                 </p>
                 <div className="max-w-[370px]">
                   <p className="text-sm md:text-base text-[#96938e] tracking-[-0.16px] leading-normal">
-                    {step.desc}
+                    {l(step.desc)}
                   </p>
                 </div>
               </div>
@@ -476,17 +470,16 @@ export default function Home() {
               height={59}
             />
             <h2 className="text-2xl md:text-[32px] font-medium text-[#201f1d] text-center">
-              Start building your gold position.
+              {l(t.cta.heading)}
             </h2>
             <p className="text-sm md:text-base font-medium text-[#96938e] text-center w-full">
-              Join the waitlist. Launching with a small group of early users
-              first.
+              {l(t.cta.body)}
             </p>
             <a
               href="#"
               className="bg-[#ffea98] border-2 border-[rgba(127,117,76,0.04)] text-[#2b2b2b] font-medium text-base px-4 py-3 rounded-full h-[44px] flex items-center tracking-[-0.3px]"
             >
-              Open Telegram
+              {l(t.cta.button)}
             </a>
           </div>
         </div>
@@ -511,13 +504,13 @@ export default function Home() {
               Auric
             </span>
           </div>
-          <span className="text-sm font-medium text-[#96938e]">By TNT Labs</span>
+          <span className="text-sm font-medium text-[#96938e]">{l(t.footer.byline)}</span>
         </div>
         <p
           className="text-xs md:text-sm font-medium text-[#939393]"
           style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
         >
-          Tether Gold DCA Engine Hackathon
+          {l(t.footer.hackathon)}
           <span className="text-[#96938e]"> &middot; </span>
           <span className="text-[rgba(150,147,142,0.5)]">2026</span>
         </p>
