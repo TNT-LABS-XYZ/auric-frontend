@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, EB_Garamond } from "next/font/google";
+import localFont from "next/font/local";
+import { EB_Garamond } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
+const interDisplay = localFont({
+  src: "../../public/fonts/InterDisplay.var.woff2",
   variable: "--font-inter",
   display: "swap",
 });
@@ -28,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${ebGaramond.variable} antialiased`}>
+      <body className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}>
         {children}
       </body>
     </html>

@@ -158,25 +158,6 @@ function TelegramVisual() {
   );
 }
 
-const FLAGS = Array.from({ length: 16 }, (_, i) => `/images/flag-${i + 1}.svg`);
-
-function FlagRow({ order }: { order: number[] }) {
-  return (
-    <div className="flex gap-6 md:gap-10 items-center justify-center">
-      {order.map((idx, i) => (
-        <div key={i} className="w-6 h-6 md:w-8 md:h-8 overflow-hidden shrink-0">
-          <Image
-            src={FLAGS[idx]}
-            alt=""
-            width={32}
-            height={32}
-            className="w-full h-full object-contain"
-          />
-        </div>
-      ))}
-    </div>
-  );
-}
 
 function LanguageToggle({
   lang,
@@ -385,22 +366,14 @@ export default function Home() {
         id="why-xaut"
         className="bg-[#f7f6f6] mt-16 md:mt-[100px] py-12 md:py-[80px] relative overflow-hidden"
       >
-        <div className="flex flex-col gap-3 md:gap-4 items-center">
-          <div className="opacity-40">
-            <FlagRow
-              order={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
-            />
-          </div>
-          <div className="opacity-40">
-            <FlagRow
-              order={[10, 0, 1, 3, 4, 6, 7, 8, 2, 9, 11, 12, 5, 13, 14, 15]}
-            />
-          </div>
-          <div className="opacity-40">
-            <FlagRow
-              order={[0, 5, 1, 2, 7, 6, 3, 9, 13, 10, 4, 12, 8, 15, 14, 11]}
-            />
-          </div>
+        <div className="flex justify-center">
+          <Image
+            src="/images/flags.png"
+            alt=""
+            width={1568}
+            height={200}
+            className="w-full max-w-[1000px] h-auto"
+          />
         </div>
 
         <div className="text-center mt-8 md:mt-12 px-5">
