@@ -54,13 +54,33 @@ Landing Page > Telegram Bot > Create/Connect Wallet (WDK) > Fund with USDT > Def
 ## Repository Structure
 
 ```
-├── landing/          # Marketing landing page (Next.js + Tailwind)
+├── website/          # Marketing landing page (Next.js + Tailwind)
 ├── src/              # App (future — out of scope for hackathon)
 ├── package.json      # Root config
 └── CLAUDE.md         # This file
 ```
 
-The landing page is a self-contained Next.js project in `landing/`. It has its own `package.json`, `node_modules`, and dev server.
+The landing page is a self-contained Next.js project in `website/`. It has its own `package.json`, `node_modules`, and dev server. Deployed on Vercel (tnt-labs team, `david@tntlabs.xyz` account). Root directory in Vercel is set to `website`.
+
+---
+
+## Development Workflow
+
+### Visual QA with Playwright
+
+**Every time you change the website**, verify it visually using the Playwright MCP tools:
+
+1. Start the dev server (`npm run dev` in `website/`)
+2. Use `browser_navigate` to load `http://localhost:3000`
+3. Use `browser_take_screenshot` to check the page looks correct
+4. **Always check mobile** — resize to 390x844 (`browser_resize`) and screenshot again
+5. If the page supports multiple languages (EN/ES), check both by clicking the toggle
+
+Common issues to watch for:
+- Spanish copy creating extra line breaks (ES text is often longer than EN)
+- Border radius mismatches on feature cards (especially reversed layouts)
+- Z-index conflicts between overlapping sections (e.g., nav vs hero overlay)
+- Content overflow on small screens
 
 ---
 

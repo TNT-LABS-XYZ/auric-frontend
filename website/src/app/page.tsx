@@ -281,12 +281,12 @@ export default function Home() {
 
         {/* Hero Content */}
         <div className="absolute inset-0 flex items-center justify-center z-10 px-6">
-          <div className="flex flex-col gap-6 md:gap-8 items-center text-center max-w-[557px]">
+          <div className="flex flex-col gap-6 md:gap-8 items-center text-center max-w-[580px]">
             <div className="flex flex-col gap-4 md:gap-[25px] items-center w-full">
               <h1 className="text-[36px] md:text-[52px] lg:text-[64px] font-medium leading-[1.1] md:leading-[70px] text-[#fef9f4]">
                 {l(t.hero.headline)}
               </h1>
-              <p className="text-base md:text-xl font-medium text-[#fff3e9] max-w-[443px]">
+              <p className="text-base md:text-xl font-medium text-[#fff3e9] max-w-[470px]">
                 {l(t.hero.sub)}
               </p>
             </div>
