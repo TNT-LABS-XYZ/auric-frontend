@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { t, type Lang } from "./translations";
 
 const CHECK_ICON = "/images/check-icon.svg";
@@ -177,7 +177,17 @@ function LanguageToggle({
 }
 
 export default function Home() {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>(() => {
+    if (typeof window !== "undefined") {
+      return (localStorage.getItem("lang") as Lang) || "en";
+    }
+    return "en";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("lang", lang);
+  }, [lang]);
+
   const l = (obj: { en: string; es: string }) => obj[lang];
 
   return (
