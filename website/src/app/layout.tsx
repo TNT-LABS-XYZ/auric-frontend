@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import localFont from "next/font/local";
 import { EB_Garamond } from "next/font/google";
 import "./globals.css";
@@ -29,6 +30,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-VZH6EQVNN3"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-VZH6EQVNN3');
+          `}
+        </Script>
+      </head>
       <body className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}>
         {children}
       </body>
