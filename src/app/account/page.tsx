@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { formatUnits } from 'viem'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3002'
 const TELEGRAM_BOT = process.env.NEXT_PUBLIC_TELEGRAM_BOT ?? ''
@@ -17,12 +18,12 @@ interface Strategy {
   _id: string
   type: 'dca' | 'price_trigger' | 'goal'
   status: 'active' | 'paused' | 'completed' | 'cancelled'
-  amount_usd?: number
+  amount?: string
   frequency?: string
   day_of_week?: number
-  buy_below_usd?: number
-  target_xaut?: number
-  accumulated_xaut?: number
+  buy_below?: string
+  target?: string
+  accumulated?: string
   label?: string
   last_executed_at?: string
 }
@@ -210,17 +211,22 @@ function StatusBadge({ status }: { status: Strategy['status'] }) {
   )
 }
 
+function fmt6(raw?: string): string {
+  if (!raw) return '0'
+  return formatUnits(BigInt(raw), 6)
+}
+
 function formatRuleSummary(s: Strategy): string {
-  if (s.type === 'dca') return `DCA — $${s.amount_usd} ${s.frequency}`
-  if (s.type === 'price_trigger') return `Price trigger — below $${s.buy_below_usd?.toLocaleString()}`
-  if (s.type === 'goal') return `Goal — ${s.accumulated_xaut?.toFixed(3) ?? '0'} / ${s.target_xaut} XAU₮`
+  if (s.type === 'dca') return `DCA — $${fmt6(s.amount)} ${s.frequency}`
+  if (s.type === 'price_trigger') return `Price trigger — below $${Number(s.buy_below).toLocaleString()}`
+  if (s.type === 'goal') return `Goal — ${Number(fmt6(s.accumulated)).toFixed(3)} / ${fmt6(s.target)} XAU₮`
   return s.label ?? s.type
 }
 
 function formatRuleDetail(s: Strategy): string {
-  if (s.type === 'dca') return s.label ?? `$${s.amount_usd} ${s.frequency}`
-  if (s.type === 'price_trigger') return `Buy $${s.amount_usd} when triggered`
-  if (s.type === 'goal') return `$${s.amount_usd} ${s.frequency}`
+  if (s.type === 'dca') return s.label ?? `$${fmt6(s.amount)} ${s.frequency}`
+  if (s.type === 'price_trigger') return `Buy $${fmt6(s.amount)} when triggered`
+  if (s.type === 'goal') return `$${fmt6(s.amount)} ${s.frequency}`
   return ''
 }
 
