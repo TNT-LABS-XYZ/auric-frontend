@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { formatUnits } from 'viem'
 import { QRCodeSVG } from 'qrcode.react'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3002'
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000'
 const TELEGRAM_BOT = process.env.NEXT_PUBLIC_TELEGRAM_BOT ?? ''
 const STORAGE_KEY = 'auric_account'
 const ETHERSCAN_BASE = 'https://etherscan.io/address/'
