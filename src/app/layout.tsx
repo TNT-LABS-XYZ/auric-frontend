@@ -1,20 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { EB_Garamond } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const interDisplay = localFont({
+  src: "./fonts/InterDisplay.var.woff2",
+  variable: "--font-inter",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ebGaramond = EB_Garamond({
   subsets: ["latin"],
+  variable: "--font-eb-garamond",
+  weight: ["500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Auric",
-  description: "Auric — built for what matters.",
+  description: "Gold savings on autopilot.",
 };
 
 export default function RootLayout({
@@ -24,9 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}>
         {children}
       </body>
     </html>
