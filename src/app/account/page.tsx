@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { formatUnits } from 'viem'
+import { QRCodeSVG } from 'qrcode.react'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3002'
 const TELEGRAM_BOT = process.env.NEXT_PUBLIC_TELEGRAM_BOT ?? ''
 const STORAGE_KEY = 'auric_account'
+const ETHERSCAN_BASE = 'https://etherscan.io/address/'
 
 interface Account {
   user_id: string
@@ -91,8 +93,7 @@ async function refreshTelegramToken(apiKey: string): Promise<string | null> {
 function LockIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00B97D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
   )
 }
@@ -100,38 +101,39 @@ function LockIcon() {
 function WalletIcon({ stroke = '#96938E' }: { stroke?: string }) {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-      <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-      <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" /><path d="M3 5v14a2 2 0 0 0 2 2h16v-5" /><path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
     </svg>
   )
 }
 
-function KeyIcon() {
+function KeyIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#96938E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4" />
-      <path d="m21 2-9.6 9.6" />
-      <circle cx="7.5" cy="15.5" r="5.5" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4" /><path d="m21 2-9.6 9.6" /><circle cx="7.5" cy="15.5" r="5.5" />
     </svg>
   )
 }
 
-function CopyIcon() {
+function CopyIcon({ size = 12 }: { size?: number }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
     </svg>
   )
 }
 
-function InfoIcon() {
+function QRIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B6A66" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 16v-4" />
-      <path d="M12 8h.01" />
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="3" height="3" />
+    </svg>
+  )
+}
+
+function ExternalIcon() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="inline-block ml-1">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
     </svg>
   )
 }
@@ -140,8 +142,7 @@ function WarningIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4880D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-px">
       <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-      <line x1="12" y1="9" x2="12" y2="13" />
-      <line x1="12" y1="17" x2="12.01" y2="17" />
+      <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
     </svg>
   )
 }
@@ -171,27 +172,59 @@ function CheckIcon() {
 }
 
 function Spinner({ className = '' }: { className?: string }) {
+  return <div className={`inline-block w-8 h-8 border-[3px] border-[#EDEBE9] border-t-[#00B97D] rounded-full animate-spin ${className}`} />
+}
+
+function Skeleton({ className = '' }: { className?: string }) {
+  return <div className={`bg-[#F5F4F2] rounded-md animate-pulse ${className}`} />
+}
+
+function BalancesSkeleton() {
   return (
-    <div className={`inline-block w-8 h-8 border-[3px] border-[#EDEBE9] border-t-[#00B97D] rounded-full animate-spin ${className}`} />
+    <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
+      <Skeleton className="h-3 w-16 mb-4" />
+      <div className="flex justify-between items-center py-2"><Skeleton className="h-3.5 w-10" /><Skeleton className="h-4 w-20" /></div>
+      <div className="flex justify-between items-center py-2 border-t border-[rgba(0,0,0,0.06)]"><Skeleton className="h-3.5 w-10" /><Skeleton className="h-4 w-16" /></div>
+    </div>
+  )
+}
+
+function RulesSkeleton() {
+  return (
+    <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
+      <Skeleton className="h-3 w-20 mb-4" /><Skeleton className="h-3.5 w-48" />
+    </div>
+  )
+}
+
+function PriceSkeleton() {
+  return (
+    <div className="flex items-baseline justify-between px-1 mb-3 pb-3 border-b border-dashed border-[rgba(0,0,0,0.06)]">
+      <Skeleton className="h-3 w-20" /><Skeleton className="h-4 w-24" />
+    </div>
   )
 }
 
 // ─── Shared components ────────────────────────────────────────────────────────
 
-function CopyButton({ value }: { value: string }) {
+function CopyButton({ value, size = 'default' }: { value: string; size?: 'default' | 'small' }) {
   const [copied, setCopied] = useState(false)
+  const cls = size === 'small' ? 'text-[12px] px-2.5 py-1' : 'text-[13px] px-3 py-1.5'
   return (
     <button
-      onClick={() => {
-        navigator.clipboard.writeText(value)
-        setCopied(true)
-        setTimeout(() => setCopied(false), 1500)
-      }}
-      className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#96938E] bg-[#F5F4F2] rounded-[6px] px-3 py-1.5 hover:bg-[#EDEBE9] hover:text-[#201F1D] transition-colors cursor-pointer"
+      onClick={() => { navigator.clipboard.writeText(value); setCopied(true); setTimeout(() => setCopied(false), 1500) }}
+      className={`inline-flex items-center gap-1.5 font-medium text-[#96938E] bg-[#F5F4F2] rounded-[6px] hover:bg-[#EDEBE9] hover:text-[#201F1D] transition-colors cursor-pointer ${cls}`}
     >
-      <CopyIcon />
-      {copied ? 'Copied' : 'Copy'}
+      <CopyIcon />{copied ? 'Copied' : 'Copy'}
     </button>
+  )
+}
+
+function ExtLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#96938E] hover:text-[#201F1D] transition-colors">
+      {children}<ExternalIcon />
+    </a>
   )
 }
 
@@ -199,29 +232,47 @@ function StepDots({ current }: { current: number }) {
   return (
     <div className="flex gap-2 justify-center py-2">
       {[0, 1].map((i) => (
-        <div
-          key={i}
-          className={`w-2 h-2 rounded-full transition-colors ${
-            i === current ? 'bg-[#00B97D]' : i < current ? 'bg-[#00B97D] opacity-40' : 'bg-[#EDEBE9]'
-          }`}
-        />
+        <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === current ? 'bg-[#00B97D]' : i < current ? 'bg-[#00B97D] opacity-40' : 'bg-[#EDEBE9]'}`} />
       ))}
     </div>
   )
 }
 
 function StatusBadge({ status }: { status: Strategy['status'] }) {
-  const styles = {
-    active: 'text-[#00B97D] bg-[rgba(0,185,125,0.1)]',
-    paused: 'text-[#C4880D] bg-[#FFF8F0]',
-    completed: 'text-[#201F1D] bg-[#F5F4F2]',
-    cancelled: 'text-[#96938E] bg-[#F5F4F2]',
-  }
+  const styles = { active: 'text-[#00B97D] bg-[rgba(0,185,125,0.1)]', paused: 'text-[#C4880D] bg-[#FFF8F0]', completed: 'text-[#201F1D] bg-[#F5F4F2]', cancelled: 'text-[#96938E] bg-[#F5F4F2]' }
   const labels = { active: 'Active', paused: 'Paused', completed: 'Completed', cancelled: 'Cancelled' }
+  return <span className={`text-[11px] font-medium px-2 py-0.5 rounded-[6px] ${styles[status]}`}>{labels[status]}</span>
+}
+
+function WalletCard({ address, showDeposit }: { address: string; showDeposit: boolean }) {
+  const [showQR, setShowQR] = useState(false)
   return (
-    <span className={`text-[11px] font-medium px-2 py-0.5 rounded-[6px] ${styles[status]}`}>
-      {labels[status]}
-    </span>
+    <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
+      {showDeposit && (
+        <div className="flex gap-3.5 pb-3.5 mb-3.5 border-b border-[rgba(0,0,0,0.06)]">
+          <div className="shrink-0 w-9 h-9 bg-[rgba(0,185,125,0.1)] rounded-lg flex items-center justify-center"><WalletIcon stroke="#00B97D" /></div>
+          <div>
+            <p className="text-sm font-medium text-[#201F1D] mb-1">Start accumulating XAU₮</p>
+            <p className="text-[13px] text-[#6B6A66] leading-relaxed">Deposit USD₮ to your wallet. Gas is sponsored.</p>
+          </div>
+        </div>
+      )}
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-1.5 text-xs font-medium text-[#96938E] uppercase tracking-wide"><WalletIcon />Wallet</div>
+        <div className="flex gap-1.5">
+          <button onClick={() => setShowQR(!showQR)} className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#96938E] bg-[#F5F4F2] rounded-[6px] px-2.5 py-1 hover:bg-[#EDEBE9] hover:text-[#201F1D] transition-colors cursor-pointer">
+            <QRIcon />{showQR ? 'Address' : 'QR'}
+          </button>
+          <CopyButton value={address} size="small" />
+        </div>
+      </div>
+      {showQR ? (
+        <div className="flex justify-center py-3"><div className="bg-[#F5F4F2] rounded-lg p-3"><QRCodeSVG value={address} size={120} /></div></div>
+      ) : (
+        <div className="text-[13px] font-medium font-mono text-[#201F1D] bg-[#F5F4F2] rounded-lg px-3.5 py-2.5 break-all leading-relaxed">{address}</div>
+      )}
+      <div className="mt-1.5"><ExtLink href={`${ETHERSCAN_BASE}${address}`}>View on Etherscan</ExtLink></div>
+    </div>
   )
 }
 
@@ -267,17 +318,21 @@ export default function AccountPage() {
   const [step, setStep] = useState(0)
   const [account, setAccount] = useState<Account | null>(null)
   const [isCreating, setIsCreating] = useState(false)
+  const [walletReady, setWalletReady] = useState(false)
   const [error, setError] = useState('')
   const [balance, setBalance] = useState<{ xaut: number; usdt: number } | null>(null)
   const [price, setPrice] = useState<number | null>(null)
   const [strategies, setStrategies] = useState<Strategy[]>([])
-  const [detailsOpen, setDetailsOpen] = useState(false)
+  const [apiKeyOpen, setApiKeyOpen] = useState(false)
   const [telegramLinked, setTelegramLinked] = useState(false)
   const [telegramUsername, setTelegramUsername] = useState<string | null>(null)
+  const [dashboardLoading, setDashboardLoading] = useState(false)
 
   const isZeroBalance = balance != null && balance.xaut === 0 && balance.usdt === 0
   const visibleStrategies = strategies.filter((s) => s.status !== 'cancelled')
+  const hasRules = visibleStrategies.length > 0
   const hasActiveRules = visibleStrategies.some((s) => s.status === 'active')
+  const xautUsdValue = balance && price ? (balance.xaut * price) : null
 
   useEffect(() => {
     const raw = localStorage.getItem(STORAGE_KEY)
@@ -286,10 +341,9 @@ export default function AccountPage() {
       const saved = JSON.parse(raw) as Account
       setAccount(saved)
       setStep(2)
-      void loadDashboard(saved.api_key)
-    } catch {
-      localStorage.removeItem(STORAGE_KEY)
-    }
+      setDashboardLoading(true)
+      loadDashboard(saved.api_key).finally(() => setDashboardLoading(false))
+    } catch { localStorage.removeItem(STORAGE_KEY) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -321,14 +375,13 @@ export default function AccountPage() {
       const acc = await createAccount()
       localStorage.setItem(STORAGE_KEY, JSON.stringify(acc))
       setAccount(acc)
+      setBalance({ xaut: 0, usdt: 0 })
       void loadDashboard(acc.api_key)
-      setTimeout(() => setStep(2), 600)
+      setTimeout(() => setWalletReady(true), 800)
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : 'Failed to create account')
       setStep(0)
-    } finally {
-      setIsCreating(false)
-    }
+    } finally { setIsCreating(false) }
   }
 
   const handleRefreshToken = async () => {
@@ -349,7 +402,7 @@ export default function AccountPage() {
     setStrategies([])
     setTelegramLinked(false)
     setTelegramUsername(null)
-    setDetailsOpen(false)
+    setApiKeyOpen(false)
     setStep(0)
   }
 
@@ -360,155 +413,117 @@ export default function AccountPage() {
 
       <div className="max-w-[400px] mx-auto px-5 py-8">
 
-        {/* ─── Step 0: Welcome ───────────────────────────────── */}
+        {/* ─── Step 0: Welcome ─────────────────────────────────── */}
         {step === 0 && (
           <div>
-            <h1 className="text-[28px] font-medium text-[#201F1D] mb-2">
-              Gold savings on autopilot.
-            </h1>
+            <h1 className="text-[28px] font-medium text-[#201F1D] mb-2">Gold savings on autopilot.</h1>
             <p className="text-[15px] text-[#96938E] leading-relaxed mb-8">
-              Set your accumulation rules once. Auric monitors XAU₮ markets,
-              evaluates your conditions, and executes on-chain — while you sleep.
+              Set your accumulation rules once. Auric monitors XAU₮ markets, evaluates your conditions, and executes on-chain — while you sleep.
             </p>
-
             <div className="bg-[#F5F4F2] rounded-xl p-5 mb-4">
               <div className="flex gap-3.5">
-                <div className="shrink-0 w-9 h-9 bg-[rgba(0,185,125,0.1)] rounded-lg flex items-center justify-center">
-                  <LockIcon />
-                </div>
+                <div className="shrink-0 w-9 h-9 bg-[rgba(0,185,125,0.1)] rounded-lg flex items-center justify-center"><LockIcon /></div>
                 <div>
-                  <p className="text-sm font-medium text-[#201F1D] mb-1.5">
-                    Non-custodial smart wallet
-                  </p>
+                  <p className="text-sm font-medium text-[#201F1D] mb-1.5">Non-custodial smart wallet</p>
                   <p className="text-[13px] text-[#6B6A66] leading-relaxed">
-                    Powered by Tether&apos;s WDK. Only you hold the keys.
-                    Gas is sponsored — you only need USDT.
+                    Powered by <a href="https://wdk.tether.io/" target="_blank" rel="noopener noreferrer" className="underline decoration-dotted hover:text-[#201F1D] transition-colors">Tether&apos;s WDK</a>. Only you hold the keys. Gas is sponsored — you only need USD₮.
                   </p>
                 </div>
               </div>
             </div>
-
             {error && <p className="text-xs text-red-600 mb-3">{error}</p>}
-
-            <button
-              onClick={handleCreate}
-              disabled={isCreating}
-              className="w-full py-3.5 bg-[#00B97D] hover:bg-[#00a66f] text-white text-[15px] font-medium rounded-lg transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-            >
+            <button onClick={handleCreate} disabled={isCreating} className="w-full py-3.5 bg-[#00B97D] hover:bg-[#00a66f] text-white text-[15px] font-medium rounded-lg transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
               Create your wallet
             </button>
           </div>
         )}
 
-        {/* ─── Step 1: Creating → Wallet Ready ───────────────── */}
-        {step === 1 && !account && (
-          <div className="text-center pt-16">
+        {/* ─── Step 1: Creating → Wallet Ready ─────────────────── */}
+        {step === 1 && !walletReady && (
+          <div className="text-center pt-16 animate-in">
             <Spinner className="mb-4" />
             <h2 className="text-xl font-medium text-[#201F1D] mb-2">Creating your wallet</h2>
             <p className="text-[15px] text-[#96938E]">Setting up your smart account on Ethereum...</p>
           </div>
         )}
 
-        {step === 1 && account && (
-          <div>
+        {step === 1 && walletReady && account && (
+          <div className="animate-in">
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[rgba(0,185,125,0.1)] mb-4">
-                <CheckIcon />
-              </div>
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[rgba(0,185,125,0.1)] mb-4"><CheckIcon /></div>
               <h2 className="text-xl font-medium text-[#201F1D] mb-1">Your wallet is ready</h2>
-              <p className="text-[15px] text-[#96938E]">Send USDT to your wallet to start accumulating gold.</p>
+              <p className="text-[15px] text-[#96938E]">Deposit USD₮ to start accumulating XAU₮.</p>
             </div>
-
-            {/* Wallet address prominent */}
-            <div className="bg-[#F5F4F2] rounded-xl p-5 mb-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2 text-xs font-medium text-[#96938E] uppercase tracking-wide">
-                  <WalletIcon />
-                  Your Wallet Address
-                </div>
-                <CopyButton value={account.smart_account_address} />
-              </div>
-              <div className="text-sm font-medium font-mono text-[#201F1D] bg-white rounded-lg px-3.5 py-2.5 break-all leading-relaxed">
-                {account.smart_account_address}
-              </div>
-              <p className="text-xs text-[#6B6A66] mt-2">Gas is sponsored. You only need USDT.</p>
-            </div>
-
-            {/* API Key */}
+            <WalletCard address={account.smart_account_address} showDeposit={false} />
             <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-4">
               <div className="flex items-center justify-between mb-2.5">
-                <div className="flex items-center gap-2 text-xs font-medium text-[#96938E] uppercase tracking-wide">
-                  <KeyIcon />
-                  API Key
-                </div>
-                <CopyButton value={account.api_key} />
+                <div className="flex items-center gap-2 text-xs font-medium text-[#96938E] uppercase tracking-wide"><KeyIcon />API Key</div>
+                <CopyButton value={account.api_key} size="small" />
               </div>
-              <div className="text-sm font-medium font-mono text-[#201F1D] bg-[#F5F4F2] rounded-lg px-3.5 py-2.5 break-all leading-relaxed">
-                {account.api_key}
-              </div>
-              <div className="flex items-start gap-2.5 bg-[#F5F4F2] rounded-lg p-3 mt-3">
-                <div className="shrink-0 mt-px"><InfoIcon /></div>
-                <p className="text-[13px] text-[#6B6A66] leading-relaxed">
-                  Use this key to authenticate API requests and manage your strategies.
-                </p>
-              </div>
+              <div className="text-sm font-medium font-mono text-[#201F1D] bg-[#F5F4F2] rounded-lg px-3.5 py-2.5 break-all leading-relaxed">{account.api_key}</div>
+              <p className="text-xs text-[#6B6A66] mt-2">Use this key to authenticate API requests.</p>
             </div>
-
-            <button
-              onClick={() => setStep(2)}
-              className="w-full py-3.5 bg-[#00B97D] hover:bg-[#00a66f] text-white text-[15px] font-medium rounded-lg transition-colors cursor-pointer"
-            >
+            <button onClick={() => setStep(2)} className="w-full py-3.5 bg-transparent border border-[rgba(0,0,0,0.06)] hover:bg-[#F5F4F2] text-[#96938E] hover:text-[#201F1D] text-[15px] font-medium rounded-lg transition-colors cursor-pointer">
               Continue to dashboard
             </button>
           </div>
         )}
 
-        {/* ─── Step 2: Dashboard ─────────────────────────────── */}
+        {/* ─── Step 2: Dashboard ────────────────────────────────── */}
         {step === 2 && account && (
           <div>
-            {/* Fund wallet hero (zero balance) */}
-            {isZeroBalance && (
-              <div className="bg-[#F5F4F2] rounded-xl p-5 mb-3">
-                <div className="flex gap-3.5 mb-4">
-                  <div className="shrink-0 w-9 h-9 bg-[rgba(0,185,125,0.1)] rounded-lg flex items-center justify-center">
-                    <WalletIcon stroke="#00B97D" />
+            {/* Skeleton state for returning users */}
+            {dashboardLoading && (
+              <>
+                <WalletCard address={account.smart_account_address} showDeposit={false} />
+                <BalancesSkeleton />
+                <PriceSkeleton />
+                <RulesSkeleton />
+              </>
+            )}
+
+            {!dashboardLoading && (
+            <>
+            {/* Rules at top when they exist */}
+            {hasRules && (
+              <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
+                <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide mb-2">Rules</div>
+                {visibleStrategies.map((s, i) => (
+                  <div key={s._id} className={`flex items-center justify-between py-2.5 ${i > 0 ? 'border-t border-[rgba(0,0,0,0.06)]' : ''}`}>
+                    <div>
+                      <div className={`text-sm font-medium ${s.status === 'active' ? 'text-[#201F1D]' : 'text-[#96938E]'}`}>{formatRuleSummary(s)}</div>
+                      <div className="text-xs text-[#96938E] mt-0.5">{formatRuleDetail(s)}</div>
+                    </div>
+                    <StatusBadge status={s.status} />
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-[#201F1D] mb-1">
-                      Deposit USDT to start accumulating gold.
-                    </p>
-                    <p className="text-[13px] text-[#6B6A66] leading-relaxed">
-                      Send USDT to your smart wallet. Gas is sponsored — you only need USDT.
-                    </p>
+                ))}
+                {isZeroBalance && hasActiveRules && (
+                  <div className="flex items-start gap-2 bg-[#FFF8F0] rounded-lg p-2.5 mt-2">
+                    <WarningIcon />
+                    <p className="text-[13px] text-[#8B6914] leading-snug">Your rules won&apos;t execute until you deposit USD₮.</p>
                   </div>
-                </div>
-                <div className="flex items-center justify-between bg-white rounded-lg px-3.5 py-2.5">
-                  <span className="text-[13px] font-medium font-mono text-[#201F1D]">
-                    {account.smart_account_address.slice(0, 10)}...{account.smart_account_address.slice(-8)}
-                  </span>
-                  <CopyButton value={account.smart_account_address} />
-                </div>
+                )}
               </div>
             )}
 
+            {/* Wallet card (always visible) */}
+            <WalletCard address={account.smart_account_address} showDeposit={isZeroBalance && !hasRules} />
+
             {/* Balances */}
             <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
-              <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide mb-2">
-                Balances
-              </div>
+              <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide mb-2">Balances</div>
               {balance ? (
                 <div>
                   <div className="flex justify-between items-baseline py-2">
                     <span className="text-sm text-[#96938E]">XAU₮</span>
-                    <span className={`text-base font-medium font-mono ${balance.xaut > 0 ? 'text-[#DCCFBA]' : 'text-[#96938E]'}`}>
-                      {balance.xaut}
+                    <span>
+                      <span className={`text-base font-medium font-mono ${balance.xaut > 0 ? 'text-[#DCCFBA]' : 'text-[#96938E]'}`}>{balance.xaut}</span>
+                      {xautUsdValue != null && xautUsdValue > 0 && <span className="text-xs font-mono text-[#96938E] ml-1.5">~${xautUsdValue.toFixed(2)}</span>}
                     </span>
                   </div>
                   <div className="flex justify-between items-baseline py-2 border-t border-[rgba(0,0,0,0.06)]">
-                    <span className="text-sm text-[#96938E]">USDT</span>
-                    <span className={`text-base font-medium font-mono ${balance.usdt > 0 ? 'text-[#201F1D]' : 'text-[#96938E]'}`}>
-                      ${balance.usdt}
-                    </span>
+                    <span className="text-sm text-[#96938E]">USD₮</span>
+                    <span className={`text-base font-medium font-mono ${balance.usdt > 0 ? 'text-[#201F1D]' : 'text-[#96938E]'}`}>${balance.usdt}</span>
                   </div>
                 </div>
               ) : (
@@ -516,162 +531,64 @@ export default function AccountPage() {
               )}
             </div>
 
-            {/* Gold price (separate) */}
+            {/* XAU₮ price */}
             {price != null && (
-              <div className="flex items-baseline justify-between px-1 mb-3">
-                <span className="text-[13px] text-[#96938E]">Gold price</span>
-                <span className="text-[15px] font-medium font-mono text-[#DCCFBA]">
-                  ${price.toLocaleString()} <span className="text-[11px] font-normal text-[#96938E]">/ oz</span>
-                </span>
-              </div>
+              <a href="https://www.coingecko.com/en/coins/tether-gold" target="_blank" rel="noopener noreferrer" className="flex items-baseline justify-between px-1 mb-3 pb-3 border-b border-dashed border-[rgba(0,0,0,0.06)] hover:opacity-80 transition-opacity">
+                <span className="text-[13px] text-[#96938E]">XAU₮ price<ExternalIcon /></span>
+                <span className="text-[15px] font-medium font-mono text-[#DCCFBA]">${price.toLocaleString()} <span className="text-[11px] font-normal text-[#96938E]">/ oz</span></span>
+              </a>
             )}
 
-            {/* Rules */}
-            <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
-              <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide mb-2">
-                {visibleStrategies.length > 0 ? 'Rules' : 'Active Rules'}
+            {/* Empty rules */}
+            {!hasRules && (
+              <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
+                <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide mb-2">Active Rules</div>
+                <p className="text-sm text-[#96938E] leading-relaxed">No rules yet. Connect Telegram to set your first strategy.</p>
               </div>
-              {visibleStrategies.length === 0 ? (
-                <p className="text-sm text-[#96938E] leading-relaxed">
-                  No rules yet. Connect Telegram to set your first strategy.
-                </p>
-              ) : (
-                <div>
-                  {visibleStrategies.map((s, i) => (
-                    <div
-                      key={s._id}
-                      className={`flex items-center justify-between py-2.5 ${i > 0 ? 'border-t border-[rgba(0,0,0,0.06)]' : ''}`}
-                    >
-                      <div>
-                        <div className={`text-sm font-medium ${s.status === 'active' ? 'text-[#201F1D]' : 'text-[#96938E]'}`}>
-                          {formatRuleSummary(s)}
-                        </div>
-                        <div className="text-xs text-[#96938E] mt-0.5">{formatRuleDetail(s)}</div>
-                      </div>
-                      <StatusBadge status={s.status} />
-                    </div>
-                  ))}
-                  {/* Warning: rules + zero balance */}
-                  {isZeroBalance && hasActiveRules && (
-                    <div className="flex items-start gap-2 bg-[#FFF8F0] rounded-lg p-2.5 mt-2">
-                      <WarningIcon />
-                      <p className="text-[13px] text-[#8B6914] leading-snug">
-                        Your rules won&apos;t execute until you deposit USDT. Fund your wallet above to activate them.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+            )}
 
             {/* Telegram */}
             {!telegramLinked ? (
               <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
-                <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide mb-2">
-                  Telegram
-                </div>
-                <p className="text-sm text-[#6B6A66] mb-3">
-                  Manage your rules and receive execution confirmations.
-                </p>
+                <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide mb-2">Telegram</div>
+                <p className="text-sm text-[#6B6A66] mb-3">Manage your rules and receive execution confirmations.</p>
                 {account.telegram_token ? (
                   <div>
-                    <a
-                      href={`https://t.me/${TELEGRAM_BOT}?start=${account.telegram_token}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2.5 w-full py-3.5 bg-[#229ED9] hover:bg-[#1a8fc4] text-white text-[15px] font-medium rounded-lg transition-colors"
-                    >
-                      <TelegramIcon />
-                      Connect Telegram
+                    <a href={`https://t.me/${TELEGRAM_BOT}?start=${account.telegram_token}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full py-3.5 bg-[#229ED9] hover:bg-[#1a8fc4] text-white text-[15px] font-medium rounded-lg transition-colors">
+                      <TelegramIcon />Connect Telegram
                     </a>
                     <div className="flex items-center justify-between mt-2">
-                      <button
-                        onClick={() => void loadDashboard(account.api_key)}
-                        className="text-xs text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer"
-                      >
-                        I&apos;ve connected — refresh
-                      </button>
-                      <button
-                        onClick={handleRefreshToken}
-                        className="text-xs text-[#96938E] hover:text-[#6B6A66] transition-colors cursor-pointer"
-                      >
-                        Generate a new token
-                      </button>
+                      <button onClick={() => void loadDashboard(account.api_key)} className="text-xs text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer">I&apos;ve connected — refresh</button>
+                      <button onClick={handleRefreshToken} className="text-xs text-[#96938E] hover:text-[#6B6A66] transition-colors cursor-pointer">Generate a new token</button>
                     </div>
                   </div>
                 ) : (
-                  <button
-                    onClick={handleRefreshToken}
-                    className="w-full py-3 bg-[#F5F4F2] hover:bg-[#EDEBE9] text-[#201F1D] text-sm font-medium rounded-lg transition-colors cursor-pointer"
-                  >
-                    Generate Link Token
-                  </button>
+                  <button onClick={handleRefreshToken} className="w-full py-3 bg-[#F5F4F2] hover:bg-[#EDEBE9] text-[#201F1D] text-sm font-medium rounded-lg transition-colors cursor-pointer">Generate Link Token</button>
                 )}
               </div>
             ) : (
               <div className="bg-[#F5F4F2] rounded-xl px-4 py-3 mb-3 border-l-[3px] border-[#00B97D]">
                 <p className="text-sm font-medium text-[#201F1D] mb-0.5">Telegram linked</p>
-                <p className="text-[13px] text-[#6B6A66]">
-                  {telegramUsername ? `@${telegramUsername}` : 'You\'ll receive confirmations after each execution.'}
-                </p>
+                <p className="text-[13px] text-[#6B6A66]">{telegramUsername ? `@${telegramUsername}` : 'You\'ll receive confirmations after each execution.'}</p>
               </div>
             )}
 
-            {/* Account Details (collapsible) */}
-            <button
-              onClick={() => setDetailsOpen(!detailsOpen)}
-              className="flex items-center justify-center gap-1.5 w-full py-2.5 mt-4 border-t border-[rgba(0,0,0,0.06)] text-[13px] font-medium text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer"
-            >
-              Account Details
-              <span className={`transition-transform ${detailsOpen ? 'rotate-180' : ''}`}>
-                <ChevronIcon />
-              </span>
+            {/* API Key (expandable) */}
+            <button onClick={() => setApiKeyOpen(!apiKeyOpen)} className="flex items-center justify-center gap-1.5 w-full py-2.5 mt-4 border-t border-[rgba(0,0,0,0.06)] text-[13px] font-medium text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer">
+              <span className="inline-flex items-center gap-1.5"><KeyIcon size={14} />API Key</span>
+              <span className={`transition-transform ${apiKeyOpen ? 'rotate-180' : ''}`}><ChevronIcon /></span>
             </button>
-
-            {detailsOpen && (
+            {apiKeyOpen && (
               <div className="pt-3">
-                {/* Smart Wallet */}
-                <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
-                  <div className="flex items-center justify-between mb-2.5">
-                    <div className="flex items-center gap-2 text-xs font-medium text-[#96938E] uppercase tracking-wide">
-                      <WalletIcon />
-                      Smart Wallet
-                    </div>
-                    <CopyButton value={account.smart_account_address} />
-                  </div>
-                  <div className="text-sm font-medium font-mono text-[#201F1D] bg-[#F5F4F2] rounded-lg px-3.5 py-2.5 break-all leading-relaxed">
-                    {account.smart_account_address}
-                  </div>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs text-[#6B6A66]">Use this key to authenticate API requests.</p>
+                  <CopyButton value={account.api_key} size="small" />
                 </div>
-
-                {/* API Key */}
-                <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
-                  <div className="flex items-center justify-between mb-2.5">
-                    <div className="flex items-center gap-2 text-xs font-medium text-[#96938E] uppercase tracking-wide">
-                      <KeyIcon />
-                      API Key
-                    </div>
-                    <CopyButton value={account.api_key} />
-                  </div>
-                  <div className="text-sm font-medium font-mono text-[#201F1D] bg-[#F5F4F2] rounded-lg px-3.5 py-2.5 break-all leading-relaxed">
-                    {account.api_key}
-                  </div>
-                  <div className="flex items-start gap-2.5 bg-[#F5F4F2] rounded-lg p-3 mt-3">
-                    <div className="shrink-0 mt-px"><InfoIcon /></div>
-                    <p className="text-[13px] text-[#6B6A66] leading-relaxed">
-                      Use this key to authenticate API requests and manage your strategies.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Reset */}
-                <button
-                  onClick={reset}
-                  className="w-full py-2.5 text-sm text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer"
-                >
-                  Reset account
-                </button>
+                <div className="text-[13px] font-medium font-mono text-[#201F1D] bg-[#F5F4F2] rounded-lg px-3.5 py-2.5 break-all leading-relaxed">{account.api_key}</div>
+                <button onClick={reset} className="w-full py-2.5 mt-4 text-sm text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer">Reset account</button>
               </div>
+            )}
+            </>
             )}
           </div>
         )}
