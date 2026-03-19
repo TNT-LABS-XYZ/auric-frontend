@@ -1,5 +1,5 @@
 export const Spinner = ({ className = '' }: { className?: string }) => (
-  <div className={`inline-block w-8 h-8 border-[3px] border-[#EDEBE9] border-t-[#00B97D] rounded-full animate-spin ${className}`} />
+  <div className={`inline-block w-8 h-8 border-[3px] border-[#EDEBE9] border-t-[#FFEA98] rounded-full animate-spin ${className}`} />
 )
 
 const Skeleton = ({ className = '' }: { className?: string }) => (
