@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { EB_Garamond } from "next/font/google";
 import "./globals.css";
+import Auth0ProviderWrapper from "./auth0-provider";
 
 const interDisplay = localFont({
   src: "./fonts/InterDisplay.var.woff2",
@@ -29,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}>
-        {children}
+        <Auth0ProviderWrapper>{children}</Auth0ProviderWrapper>
       </body>
     </html>
   );
