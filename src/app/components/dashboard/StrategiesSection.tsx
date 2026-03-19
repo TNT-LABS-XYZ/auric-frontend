@@ -134,12 +134,12 @@ export function StrategiesSection({
         fontSize: 'var(--text-label)', fontWeight: 'var(--weight-ui)',
         color: 'var(--text-muted)', letterSpacing: '-0.003em', marginBottom: 'var(--space-1)',
       }}>
-        Strategies
+        Plans
       </p>
       {strategies.length === 0 ? (
         <div style={{ background: '#fff', boxShadow: 'var(--shadow-card)', borderRadius: 12, padding: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-body)', color: 'var(--text-muted)', margin: 0 }}>
-            No rules yet. Connect Telegram to set your first strategy.
+            No plans yet. Connect Telegram to set your first plan.
           </p>
         </div>
       ) : (

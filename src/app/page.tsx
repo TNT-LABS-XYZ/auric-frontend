@@ -8,7 +8,7 @@ import Dashboard from './components/Dashboard'
 const SpinnerScreen = () => (
   <main className="min-h-screen bg-white font-[family-name:var(--font-inter)]" style={{ letterSpacing: '-0.1px' }}>
     <AuricWordmark />
-    <div className="max-w-[400px] mx-auto px-5 py-8 text-center pt-16">
+    <div style={{ display: 'flex', justifyContent: 'center', height: 'calc(100vh - 52px)', alignItems: 'center' }}>
       <Spinner />
     </div>
   </main>
