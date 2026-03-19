@@ -10,6 +10,35 @@ import { WalletCard } from './components/WalletCard'
 import { StatusBadge } from './components/StatusBadge'
 import { useState } from 'react'
 
+function TokenInfoTooltip() {
+  const [visible, setVisible] = useState(false)
+  return (
+    <span className="relative flex items-center">
+      <button
+        onMouseEnter={() => setVisible(true)}
+        onMouseLeave={() => setVisible(false)}
+        onFocus={() => setVisible(true)}
+        onBlur={() => setVisible(false)}
+        className="text-[#96938E] hover:text-[#201F1D] transition-colors cursor-default"
+        aria-label="Token info"
+        tabIndex={0}
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </button>
+      {visible && (
+        <span className="absolute bottom-full right-0 mb-2 w-[220px] bg-[#201F1D] text-white text-[11px] leading-snug rounded-lg px-3 py-2.5 z-10 shadow-lg pointer-events-none">
+          This token expires after 30 days and rotates when you log out and back in. If your MCP connection stops working, re-copy this config with your new token.
+          <span className="absolute bottom-[-5px] right-[4px] w-2.5 h-2.5 bg-[#201F1D] rotate-45" />
+        </span>
+      )}
+    </span>
+  )
+}
+
 function McpSnippet({ token }: { token: string | null }) {
   const [copied, setCopied] = useState(false)
   const [revealed, setRevealed] = useState(false)
@@ -39,12 +68,15 @@ function McpSnippet({ token }: { token: string | null }) {
         <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide">MCP Server</div>
         <div className="flex items-center gap-3">
           {revealed && (
-            <button
-              onClick={handleCopy}
-              className="text-xs font-medium text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer"
-            >
-              {copied ? 'Copied' : 'Copy'}
-            </button>
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={handleCopy}
+                className="text-xs font-medium text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer"
+              >
+                {copied ? 'Copied' : 'Copy'}
+              </button>
+              <TokenInfoTooltip />
+            </div>
           )}
           <button
             onClick={() => setRevealed((v) => !v)}
