@@ -1,3 +1,9 @@
+export const AuricLogoMark = ({ size = 20 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19.5 0.278748C24.7467 0.278748 29 4.53204 29 9.77875C29 15.0255 24.7467 19.2787 19.5 19.2787H9.5C4.2533 19.2787 0 15.0255 0 9.77875C0 4.53204 4.2533 0.278748 9.5 0.278748H19.5ZM10.5 4.27875C7.46243 4.27875 5 6.74118 5 9.77875C5 12.8163 7.46243 15.2787 10.5 15.2787H18.5C21.5376 15.2787 24 12.8163 24 9.77875C24 6.74118 21.5376 4.27875 18.5 4.27875H10.5Z" fill="#201F1D"/>
+  </svg>
+)
+
 export const AuricWordmark = () => (
   <div className="flex items-center justify-center pt-6 pb-2">
     <svg width="98" height="20" viewBox="0 0 98 20" fill="none" xmlns="http://www.w3.org/2000/svg">
