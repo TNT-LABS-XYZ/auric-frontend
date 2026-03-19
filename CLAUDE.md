@@ -86,9 +86,9 @@ Common issues to watch for:
 
 ## What is Auric?
 
-Auric is the product name for Quant's first vertical: automated gold (XAU₮) accumulation.
+Auric is TNT Labs' automated gold (XAU₮) accumulation engine.
 
-Auric is built by **TNT Labs**, the same team behind Quant. Quant is the broader automation execution layer for crypto. Auric is a focused application of Quant's engine for gold savings, built for the Tether WDK hackathon.
+Auric is built by **TNT Labs** for the Tether WDK hackathon.
 
 **Auric is not a trading bot.** It executes the user's rules, not its own decisions.
 
