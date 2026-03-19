@@ -46,11 +46,11 @@ export function BalanceSection({
   const usdtAvailable = balance?.usdt ?? 0
 
   const totalInvested = executions
-    .filter((e) => e.status === 'success')
+    .filter((e) => e.status === 'success' && e.triggered_by !== 'withdrawal')
     .reduce((sum, e) => sum + f6(e.amount_spent), 0)
 
   const totalReceived = executions
-    .filter((e) => e.status === 'success')
+    .filter((e) => e.status === 'success' && e.triggered_by !== 'withdrawal')
     .reduce((sum, e) => sum + f6(e.amount_received), 0)
 
   const avgPrice = totalReceived > 0 ? totalInvested / totalReceived : null

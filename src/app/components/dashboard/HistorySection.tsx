@@ -5,10 +5,11 @@ import { type Execution } from '../../hooks/useAccount'
 import { fadeUp, f6, fmtDate, fmtUsd } from './shared'
 
 const TRIGGER_META: Record<string, { label: string; color: string; bg: string }> = {
-  dca:           { label: 'DCA',     color: 'var(--accent)', bg: 'var(--accent-surface)' },
-  price_trigger: { label: 'Trigger', color: 'var(--gold)',   bg: 'rgba(201,148,42,.1)' },
-  goal_progress: { label: 'Goal',    color: 'var(--text)',   bg: 'var(--bg-surface)' },
-  ai_agent:      { label: 'AI',      color: '#9896FF',       bg: 'rgba(152,150,255,.1)' },
+  dca:           { label: 'DCA',      color: 'var(--accent)', bg: 'var(--accent-surface)' },
+  price_trigger: { label: 'Trigger',  color: 'var(--gold)',   bg: 'rgba(201,148,42,.1)' },
+  goal_progress: { label: 'Goal',     color: 'var(--text)',   bg: 'var(--bg-surface)' },
+  ai_agent:      { label: 'AI',       color: '#9896FF',       bg: 'rgba(152,150,255,.1)' },
+  withdrawal:    { label: 'Withdraw', color: '#C4622D',       bg: 'rgba(196,98,45,.08)' },
 }
 
 const thStyle: React.CSSProperties = {
@@ -51,6 +52,14 @@ export function HistorySection({ executions }: { executions: Execution[] }) {
                 const meta = TRIGGER_META[ex.triggered_by] ?? TRIGGER_META.dca
                 const isLast = i === executions.length - 1
                 const border = isLast ? 'none' : tdStyle.borderBottom
+                const isWithdrawal = ex.triggered_by === 'withdrawal'
+                const monoStyle: React.CSSProperties = {
+                  ...tdStyle,
+                  fontFamily: '"SF Mono", Consolas, Menlo, monospace',
+                  fontWeight: 'var(--weight-ui)',
+                  letterSpacing: '-0.02em',
+                  borderBottom: border,
+                }
                 return (
                   <tr
                     key={ex._id}
@@ -70,12 +79,25 @@ export function HistorySection({ executions }: { executions: Execution[] }) {
                         {meta.label}
                       </span>
                     </td>
-                    <td style={{ ...tdStyle, fontFamily: '"SF Mono", Consolas, Menlo, monospace', fontWeight: 'var(--weight-ui)', letterSpacing: '-0.02em', borderBottom: border }}>
-                      +{f6(ex.amount_received).toFixed(3)} XAU₮
-                    </td>
-                    <td style={{ ...tdStyle, color: 'var(--text-muted)', borderBottom: border }}>
-                      ${fmtUsd(f6(ex.amount_spent))}
-                    </td>
+                    {isWithdrawal ? (
+                      <>
+                        <td style={monoStyle}>
+                          −{f6(ex.amount_spent).toFixed(ex.token === 'xaut' ? 3 : 2)} {(ex.token ?? 'usdt').toUpperCase()}
+                        </td>
+                        <td style={{ ...tdStyle, color: 'var(--text-muted)', borderBottom: border }}>
+                          $0.00
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td style={monoStyle}>
+                          +{f6(ex.amount_received).toFixed(3)} XAU₮
+                        </td>
+                        <td style={{ ...tdStyle, color: 'var(--text-muted)', borderBottom: border }}>
+                          ${fmtUsd(f6(ex.amount_spent))}
+                        </td>
+                      </>
+                    )}
                     <td style={{ ...tdStyle, textAlign: 'right', borderBottom: border }}>
                       <span style={{ fontSize: 'var(--text-label)', fontWeight: 'var(--weight-ui)', color: ex.status === 'success' ? 'var(--accent)' : 'var(--error)' }}>
                         {ex.status === 'success' ? 'Done' : 'Failed'}

@@ -5,9 +5,19 @@ import { AuricWordmark, AuricLogoMark } from './components/AuricWordmark'
 import { Spinner } from './components/Skeletons'
 import Dashboard from './components/Dashboard'
 
+const SpinnerScreen = () => (
+  <main className="min-h-screen bg-white font-[family-name:var(--font-inter)]" style={{ letterSpacing: '-0.1px' }}>
+    <AuricWordmark />
+    <div className="max-w-[400px] mx-auto px-5 py-8 text-center pt-16">
+      <Spinner />
+    </div>
+  </main>
+)
+
 const Page = () => {
   const {
     authLoading,
+    isAuthenticated,
     step,
     isProvisioning,
     error,
@@ -26,24 +36,19 @@ const Page = () => {
     unlinkTelegram,
   } = useAccount()
 
-  if (authLoading) {
-    return (
-      <main className="min-h-screen bg-white font-[family-name:var(--font-inter)]" style={{ letterSpacing: '-0.1px' }}>
-        <AuricWordmark />
-        <div className="max-w-[400px] mx-auto px-5 py-8 text-center pt-16">
-          <Spinner />
-        </div>
-      </main>
-    )
+  // Auth0 still resolving session, or session resolved + authenticated but profile not loaded yet
+  if (authLoading || (isAuthenticated && step === 0)) {
+    return <SpinnerScreen />
   }
 
-  // Step 0: Login gate
+  // Step 0: Login gate — only shown when definitively not authenticated
   if (step === 0) {
     return (
       <main
         className="font-[family-name:var(--font-inter)] flex flex-col bg-white"
-        style={{ minHeight: '100svh' }}
+        style={{ minHeight: '100svh', animation: 'fadeIn 150ms ease-out' }}
       >
+        <style>{`@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }`}</style>
         <AuricWordmark />
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 24px 32px' }}>
           <div style={{ width: '100%', maxWidth: 340 }}>
@@ -83,19 +88,10 @@ const Page = () => {
 
   // Step 1: Provisioning
   if (step === 1 && isProvisioning) {
-    return (
-      <main className="min-h-screen bg-white font-[family-name:var(--font-inter)]" style={{ letterSpacing: '-0.1px' }}>
-        <AuricWordmark />
-        <div className="max-w-[400px] mx-auto px-5 py-8 text-center pt-16 animate-in">
-          <Spinner className="mb-4" />
-          <h2 className="text-xl font-medium text-[#201F1D] mb-2">Setting up your wallet</h2>
-          <p className="text-[15px] text-[#96938E]">Creating your smart account on Ethereum...</p>
-        </div>
-      </main>
-    )
+    return <SpinnerScreen />
   }
 
-  // Step 2: Dashboard — hook already called once above, pass state as props
+  // Step 2: Dashboard
   return (
     <Dashboard
       account={account}

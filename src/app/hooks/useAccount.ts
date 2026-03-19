@@ -17,7 +17,7 @@ export const fmt6 = (raw?: string): string => {
 export type StrategyType = 'dca' | 'price_trigger' | 'goal' | 'ai_agent'
 export type StrategyStatus = 'active' | 'paused' | 'completed' | 'cancelled'
 export type DcaFrequency = 'hourly' | 'daily' | 'weekly' | 'monthly'
-export type ExecutionTriggeredBy = 'dca' | 'price_trigger' | 'goal_progress' | 'ai_agent'
+export type ExecutionTriggeredBy = 'dca' | 'price_trigger' | 'goal_progress' | 'ai_agent' | 'withdrawal'
 export type ExecutionStatus = 'success' | 'failed'
 
 export interface PendingStep {
@@ -72,7 +72,7 @@ export interface Strategy {
 
 export interface Execution {
   _id: string
-  strategy_id: string
+  strategy_id?: string | null
   user_id: string
   triggered_by: ExecutionTriggeredBy
   xaut_price_usd: number
@@ -82,6 +82,8 @@ export interface Execution {
   status: ExecutionStatus
   error?: string
   reasoning?: string        // ai_agent only
+  token?: 'usdt' | 'xaut'  // withdrawal only
+  to_address?: string       // withdrawal only
   executed_at: string
 }
 
