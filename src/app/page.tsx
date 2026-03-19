@@ -40,29 +40,39 @@ const Page = () => {
   // Step 0: Login gate
   if (step === 0) {
     return (
-      <main className="min-h-screen bg-white font-[family-name:var(--font-inter)] relative flex flex-col" style={{ letterSpacing: '-0.1px' }}>
+      <main
+        className="font-[family-name:var(--font-inter)] flex flex-col bg-white"
+        style={{ minHeight: '100svh' }}
+      >
         <AuricWordmark />
-        <div className="flex-1 flex items-center justify-center">
-          <div className="max-w-[400px] w-full px-5">
-            <h1 className="text-[28px] font-medium text-[#201F1D] mb-2 text-center">Gold savings on autopilot.</h1>
-            <p className="text-[15px] text-[#96938E] leading-relaxed mb-8 text-center">
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 24px 32px' }}>
+          <div style={{ width: '100%', maxWidth: 340 }}>
+            <h1 style={{ fontSize: 28, fontWeight: 500, letterSpacing: '-0.04em', color: '#1D1C1A', textAlign: 'center', lineHeight: 1.2, margin: '0 0 10px' }}>
+              Gold savings on autopilot.
+            </h1>
+            <p style={{ fontSize: 14, color: '#96938E', textAlign: 'center', letterSpacing: '-0.1px', lineHeight: 1.6, margin: '0 0 28px' }}>
               Set your rules once. Auric monitors XAUT, executes on-chain — while you sleep.
             </p>
-            <div className="bg-[#F5F4F2] rounded-xl p-5 mb-4">
-              <div className="flex gap-3.5">
-                <div className="shrink-0 w-9 h-9 bg-[#EDD97A] rounded-lg flex items-center justify-center">
-                  <AuricLogoMark size={18} />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-[#201F1D] mb-1.5">Non-custodial smart wallet</p>
-                  <p className="text-[13px] text-[#6B6A66] leading-relaxed">
-                    Powered by Tether&apos;s WDK. Gas is sponsored — you only need USDT
-                  </p>
-                </div>
+            <div style={{ background: '#F7F6F6', borderRadius: 14, padding: '14px 16px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 34, height: 34, borderRadius: 8, flexShrink: 0, background: '#FFEA98', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <AuricLogoMark size={14} color="#8B7B2E" />
+              </div>
+              <div>
+                <p style={{ fontSize: 13, fontWeight: 500, color: '#1D1C1A', letterSpacing: '-0.1px', margin: '0 0 3px' }}>
+                  Non-custodial smart wallet
+                </p>
+                <p style={{ fontSize: 12, color: '#96938E', letterSpacing: '-0.1px', lineHeight: 1.45, margin: 0 }}>
+                  Powered by Tether&apos;s WDK. Gas is sponsored — you only need USDT
+                </p>
               </div>
             </div>
-            {error && <p className="text-xs text-red-600 mb-3">{error}</p>}
-            <button onClick={handleLogin} className="w-full py-3.5 bg-[#EDD97A] hover:bg-[#e5cf6a] text-[#201F1D] text-[15px] font-medium rounded-full transition-colors cursor-pointer">
+            {error && <p style={{ fontSize: 12, color: '#dc2626', marginBottom: 12 }}>{error}</p>}
+            <button
+              onClick={handleLogin}
+              style={{ display: 'flex', height: 44, width: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 999, border: '2px solid rgba(127,117,76,.06)', background: '#FFEA98', cursor: 'pointer', fontSize: 14, fontWeight: 500, fontFamily: 'inherit', color: '#1D1C1A', letterSpacing: '-0.1px', boxSizing: 'border-box' }}
+              onMouseEnter={e => (e.currentTarget.style.background = '#FFE37A')}
+              onMouseLeave={e => (e.currentTarget.style.background = '#FFEA98')}
+            >
               Create your wallet
             </button>
           </div>

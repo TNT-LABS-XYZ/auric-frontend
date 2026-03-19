@@ -1,8 +1,21 @@
-export const AuricLogoMark = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19.5 0.278748C24.7467 0.278748 29 4.53204 29 9.77875C29 15.0255 24.7467 19.2787 19.5 19.2787H9.5C4.2533 19.2787 0 15.0255 0 9.77875C0 4.53204 4.2533 0.278748 9.5 0.278748H19.5ZM10.5 4.27875C7.46243 4.27875 5 6.74118 5 9.77875C5 12.8163 7.46243 15.2787 10.5 15.2787H18.5C21.5376 15.2787 24 12.8163 24 9.77875C24 6.74118 21.5376 4.27875 18.5 4.27875H10.5Z" fill="#201F1D"/>
-  </svg>
-)
+export const AuricLogoMark = ({ size = 28, color = '#1D1C1A' }: { size?: number; color?: string }) => {
+  const scale = size / 29
+  return (
+    <svg
+      width={size}
+      height={Math.round(19 * scale)}
+      viewBox="0 0 29 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: 'block', flexShrink: 0 }}
+    >
+      <path
+        d="M19.5 0C24.7467 4.18767e-07 29 4.2533 29 9.5C29 14.7467 24.7467 19 19.5 19H9.5C4.2533 19 0 14.7467 0 9.5C0 4.2533 4.2533 0 9.5 0H19.5ZM10.5 4C7.46243 4 5 6.46243 5 9.5C5 12.5376 7.46243 15 10.5 15H18.5C21.5376 15 24 12.5376 24 9.5C24 6.46243 21.5376 4 18.5 4H10.5Z"
+        fill={color}
+      />
+    </svg>
+  )
+}
 
 export const AuricWordmark = () => (
   <div className="flex items-center justify-center pt-6 pb-2">
