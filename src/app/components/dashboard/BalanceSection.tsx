@@ -100,7 +100,7 @@ export function BalanceSection({
       }}>
         <StatItem
           label="Total invested"
-          value={totalInvested > 0 ? `$${fmtUsd(totalInvested)}` : '—'}
+          value={currentValue > 0 ? `$${fmtUsd(currentValue)}` : '—'}
         />
         <StatItem
           label="Avg buy price"
