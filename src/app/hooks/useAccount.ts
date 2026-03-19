@@ -89,6 +89,7 @@ export const useAccount = () => {
   const [telegramLinked, setTelegramLinked] = useState(false)
   const [telegramUsername, setTelegramUsername] = useState<string | null>(null)
   const [dashboardLoading, setDashboardLoading] = useState(false)
+  const [accessToken, setAccessToken] = useState<string | null>(null)
 
   const visibleStrategies = strategies.filter((s) => s.status !== 'cancelled')
   const hasRules = visibleStrategies.length > 0
@@ -127,6 +128,7 @@ export const useAccount = () => {
     setStep(1)
     try {
       const token = await getAccessTokenSilently()
+      setAccessToken(token)
       const profile = await apiFetchProfile(token)
       if (!profile) throw new Error('Failed to load account')
 
@@ -194,6 +196,8 @@ export const useAccount = () => {
     telegramUsername,
     // loading
     dashboardLoading,
+    // token
+    accessToken,
     // handlers
     handleRefreshToken,
     handleRefreshDashboard,

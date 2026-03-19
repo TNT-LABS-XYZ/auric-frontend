@@ -458,7 +458,9 @@ export default function Home() {
               {l(t.cta.body)}
             </p>
             <a
-              href="#"
+              href="https://auric-tether-app.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-[#ffea98] border-2 border-[rgba(127,117,76,0.04)] text-[#2b2b2b] font-medium text-base px-4 py-3 rounded-full h-[44px] flex items-center tracking-[-0.3px]"
             >
               {l(t.cta.button)}

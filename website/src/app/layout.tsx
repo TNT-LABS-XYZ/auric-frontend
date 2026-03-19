@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "Auric - Gold that works while you sleep",
   description:
     "Set your accumulation rules once. Auric monitors XAU\u20ae markets, evaluates your conditions, and executes on-chain \u2014 while you sleep.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

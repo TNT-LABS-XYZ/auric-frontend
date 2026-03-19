@@ -161,7 +161,7 @@ export const t = {
       en: "Launching with 50 early users. Request access.",
       es: "Lanzando con 50 usuarios iniciales. Solicita acceso.",
     },
-    button: { en: "Request Access", es: "Solicitar Acceso" },
+    button: { en: "Go to App", es: "Ir a la App" },
   },
 
   footer: {

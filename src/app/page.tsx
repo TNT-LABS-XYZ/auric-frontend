@@ -8,6 +8,81 @@ import { LockIcon, WarningIcon, TelegramIcon, ExternalIcon } from './components/
 import { Spinner, BalancesSkeleton, PriceSkeleton, RulesSkeleton } from './components/Skeletons'
 import { WalletCard } from './components/WalletCard'
 import { StatusBadge } from './components/StatusBadge'
+import { useState } from 'react'
+
+function McpSnippet({ token }: { token: string | null }) {
+  const [copied, setCopied] = useState(false)
+  const [revealed, setRevealed] = useState(false)
+  const snippet = JSON.stringify(
+    {
+      mcpServers: {
+        auric: {
+          command: 'npx',
+          args: ['-y', 'mcp-remote', 'https://auric-backend-production.up.railway.app/mcp', '--header', `Authorization: Bearer ${token ?? 'YOUR_JWT_HERE'}`],
+        },
+      },
+    },
+    null,
+    2
+  )
+
+  const handleCopy = () => {
+    void navigator.clipboard.writeText(snippet).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  return (
+    <div className="bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.06)] p-4 mb-3">
+      <div className="flex items-center justify-between mb-2">
+        <div className="text-xs font-medium text-[#96938E] uppercase tracking-wide">MCP Server</div>
+        <div className="flex items-center gap-3">
+          {revealed && (
+            <button
+              onClick={handleCopy}
+              className="text-xs font-medium text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer"
+            >
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          )}
+          <button
+            onClick={() => setRevealed((v) => !v)}
+            className="text-[#96938E] hover:text-[#201F1D] transition-colors cursor-pointer"
+            aria-label={revealed ? 'Hide config' : 'Reveal config'}
+          >
+            {revealed ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {!revealed ? (
+        <div className="bg-[#FFF8F0] rounded-lg px-3 py-2.5 flex items-start gap-2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8B6914" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-[1px]">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <p className="text-[12px] text-[#8B6914] leading-snug">
+            This config contains your auth token. Treat it like a password — don&apos;t share it. Click the eye icon to reveal.
+          </p>
+        </div>
+      ) : (
+        <pre className="bg-[#F5F4F2] rounded-lg p-3 text-[11px] font-mono text-[#201F1D] overflow-x-auto leading-relaxed whitespace-pre">{snippet}</pre>
+      )}
+    </div>
+  )
+}
 
 const TELEGRAM_BOT = process.env.NEXT_PUBLIC_TELEGRAM_BOT ?? ''
 
@@ -51,6 +126,7 @@ const Page = () => {
     handleLogout,
     handleRefreshToken,
     handleRefreshDashboard,
+    accessToken,
   } = useAccount()
 
   if (authLoading) {
@@ -200,6 +276,8 @@ const Page = () => {
                     <p className="text-[13px] text-[#6B6A66]">{telegramUsername ? `@${telegramUsername}` : "You'll receive confirmations after each execution."}</p>
                   </div>
                 )}
+
+                <McpSnippet token={accessToken} />
 
                 <button
                   onClick={handleLogout}

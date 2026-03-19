@@ -20,6 +20,9 @@ const ebGaramond = EB_Garamond({
 export const metadata: Metadata = {
   title: "Auric",
   description: "Gold savings on autopilot.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
