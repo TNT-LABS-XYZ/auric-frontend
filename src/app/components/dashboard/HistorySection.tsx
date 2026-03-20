@@ -34,7 +34,7 @@ export function HistorySection({ executions }: { executions: Execution[] }) {
       <div style={{ background: '#fff', borderRadius: 12, boxShadow: 'var(--shadow-card)', overflow: 'auto' }}>
         {executions.length === 0 ? (
           <div style={{ padding: 'var(--space-3)' }}>
-            <p style={{ fontSize: 'var(--text-body)', color: 'var(--text-muted)', margin: 0 }}>No transactions yet.</p>
+            <p style={{ fontSize: 'var(--text-label)', color: 'var(--text-muted)', letterSpacing: '-0.003em', margin: 0 }}>No transactions yet.</p>
           </div>
         ) : (
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>

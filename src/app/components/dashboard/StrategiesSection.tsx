@@ -138,7 +138,7 @@ export function StrategiesSection({
       </p>
       {strategies.length === 0 ? (
         <div style={{ background: '#fff', boxShadow: 'var(--shadow-card)', borderRadius: 12, padding: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-body)', color: 'var(--text-muted)', margin: 0 }}>
+          <p style={{ fontSize: 'var(--text-label)', color: 'var(--text-muted)', letterSpacing: '-0.003em', margin: 0 }}>
             No plans yet. Connect Telegram to set your first plan.
           </p>
         </div>
