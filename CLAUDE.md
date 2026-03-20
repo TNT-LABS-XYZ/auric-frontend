@@ -24,6 +24,7 @@ The "wow" moment: set a rule, walk away, get notified that it executed.
 ### Scope
 
 **In scope:**
+
 - Engine: signal evaluation loop, rule condition matching, execution via WDK
 - WDK integration: wallet creation, balance checks, USDT to XAU₮ swaps, withdrawals, tx confirmation
 - Telegram bot: onboarding, rule creation flow, notifications, user commands (/status, /history, /pause, /edit, /withdraw)
@@ -34,22 +35,24 @@ The "wow" moment: set a rule, walk away, get notified that it executed.
 - Documentation: architecture overview, setup instructions
 
 **Out of scope:**
+
 - Multi-asset support beyond XAU₮
 
 ### Strategy Types
 
-| Type | Description |
-|------|-------------|
-| `dca` | Fixed-amount buys on a schedule (hourly/daily/weekly/monthly) |
-| `price_trigger` | Buy when XAU₮ drops below a price threshold |
-| `goal` | Accumulate toward a target XAU₮ amount |
-| `ai_agent` | Claude-powered adaptive DCA — adjusts buy amount (50-150% of base) based on market context, with persistent memory and multi-step planning |
+| Type            | Description                                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `dca`           | Fixed-amount buys on a schedule (hourly/daily/weekly/monthly)                                                                              |
+| `price_trigger` | Buy when XAU₮ drops below a price threshold                                                                                                |
+| `goal`          | Accumulate toward a target XAU₮ amount                                                                                                     |
+| `ai_agent`      | Claude-powered adaptive DCA — adjusts buy amount (50-150% of base) based on market context, with persistent memory and multi-step planning |
 
 ### User Flow
 
 Landing Page > Web App (Auth0 login) or Telegram Bot > Create/Connect Wallet (WDK) > Fund with USDT > Define Plan (DCA / Price Trigger / Goal / AI Agent) > Engine Monitors + Evaluates > Executes On-Chain > User Gets Notified > Ongoing Management via Dashboard or Bot Commands
 
 ### Metadata
+
 - Lead: Juan
 - Members: David, Hugo, Juan
 - Start date: Mar 14, 2026
@@ -94,6 +97,7 @@ Landing Page > Web App (Auth0 login) or Telegram Bot > Create/Connect Wallet (WD
 ### Deployment
 
 Two separate Vercel projects on the same repo (tnt-labs team):
+
 - **Website** (`website/`): Root directory set to `website` in Vercel
 - **Web app** (root): Project `auric-app`, deployed at `auric-app-mu.vercel.app`
 
@@ -102,6 +106,7 @@ Two separate Vercel projects on the same repo (tnt-labs team):
 The backend (`auric-backend`) is a separate repo deployed on Railway at `auric-backend-production.up.railway.app`. Built with NestJS + MongoDB.
 
 Key backend features:
+
 - WDK integration (wallet creation, token swaps, transfers)
 - Strategy engine (evaluates every minute via cron)
 - AI agent reasoning via Claude (claude-sonnet-4-6)
@@ -116,18 +121,21 @@ Key backend features:
 ### Running locally
 
 **Frontend (web app):**
+
 ```bash
 cd /path/to/auric-frontend
 npm run dev          # Runs on :3000
 ```
 
 **Backend** (separate repo):
+
 ```bash
 cd /path/to/auric-backend
 npm run start:dev    # Runs on :3002
 ```
 
 Frontend `.env.local` must have:
+
 - `NEXT_PUBLIC_API_URL` — backend URL (localhost:3002 for dev)
 - `NEXT_PUBLIC_TELEGRAM_BOT` — bot username
 - `BACKEND_URL` — server-side backend URL
@@ -136,12 +144,14 @@ Frontend `.env.local` must have:
 ### Auth
 
 The web app uses **Auth0** for authentication:
+
 - Domain: `dev-bvi655h85sxmwolm.us.auth0.com`
 - The `useAccount` hook manages auth state, API calls, and data polling (60s interval)
 
 ### Tests
 
 Tests use **Vitest**. Run with:
+
 ```bash
 npx vitest run
 ```
@@ -158,6 +168,7 @@ npx vitest run
 4. **Always check mobile** — resize to 390x844 (`browser_resize`) and screenshot again
 
 Common issues to watch for:
+
 - Content overflow on small screens
 - Z-index conflicts between overlapping sections (e.g., sticky header vs modals)
 
@@ -184,6 +195,7 @@ Auric is built by **TNT Labs** for the Tether WDK hackathon.
 ### Language Rules
 
 **Use:**
+
 - "Your rules" / "your conditions" / "your intent"
 - "Plan" (not "strategy" or "bot") in user-facing copy
 - "Watches" / "monitors" / "surfaces"
@@ -193,6 +205,7 @@ Auric is built by **TNT Labs** for the Tether WDK hackathon.
 - "Gold that works while you sleep" (primary headline)
 
 **Never use:**
+
 - "Bot" / "agent" / "autonomous" (in user-facing copy)
 - "AI-powered" as a leading adjective
 - "Smart" / "intelligent" as marketing descriptors
@@ -202,7 +215,8 @@ Auric is built by **TNT Labs** for the Tether WDK hackathon.
 - Emojis (never, in any content)
 
 ### Hard boundary from research:
-*"If I get a 'gm bro. let's HODL!' notification, I delete the app without even opening it."* — Noel
+
+_"If I get a 'gm bro. let's HODL!' notification, I delete the app without even opening it."_ — Noel
 
 ---
 
@@ -230,14 +244,14 @@ Users don't need help making decisions. They need help with **execution readines
 
 ### Key Differentiators
 
-| Dimension | Auric | Alternatives |
-|-----------|-------|-------------|
-| Interaction | Proactive (system watches) | Reactive (user checks) |
-| Control | User-defined rules | System-driven |
-| Trust | Progressive delegation | Immediate automation |
-| Custody | Non-custodial, WDK-based | Requires funds on exchange |
-| Workflow | Web dashboard + Telegram | Fragmented tools |
-| Explainability | "Matches your rule" | "AI recommends" |
+| Dimension      | Auric                      | Alternatives               |
+| -------------- | -------------------------- | -------------------------- |
+| Interaction    | Proactive (system watches) | Reactive (user checks)     |
+| Control        | User-defined rules         | System-driven              |
+| Trust          | Progressive delegation     | Immediate automation       |
+| Custody        | Non-custodial, WDK-based   | Requires funds on exchange |
+| Workflow       | Web dashboard + Telegram   | Fragmented tools           |
+| Explainability | "Matches your rule"        | "AI recommends"            |
 
 ---
 
@@ -255,6 +269,7 @@ Users don't need help making decisions. They need help with **execution readines
 For full product strategy, positioning framework, user research synthesis, and competitive analysis, see the Quant-context repo at `/Users/davidfernandez/TNT Labs/Quant-context/`.
 
 Key files there:
+
 - `CLAUDE.md` — full product context
 - `product beta/product_positioning.md` — positioning framework
 - `business-context/quant_brand_tone.md` — brand voice guide

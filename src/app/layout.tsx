@@ -32,7 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}>
+      <body
+        className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}
+      >
         <Auth0ProviderWrapper>{children}</Auth0ProviderWrapper>
       </body>
     </html>

@@ -76,53 +76,53 @@ Light mode is primary. Dark mode is supported for hero sections and dark-backgro
 
 ### Light mode — backgrounds
 
-| Token | Hex | Usage |
-|---|---|---|
-| `bg.primary` | `#FAFAF9` | Page / app background |
+| Token          | Hex       | Usage                            |
+| -------------- | --------- | -------------------------------- |
+| `bg.primary`   | `#FAFAF9` | Page / app background            |
 | `bg.secondary` | `#F5F4F2` | Cards, panels, input backgrounds |
-| `bg.tertiary` | `#EDEBE9` | Hover states, nested surfaces |
-| `bg.elevated` | `#FFFFFF` | Modals, dropdowns, popovers |
+| `bg.tertiary`  | `#EDEBE9` | Hover states, nested surfaces    |
+| `bg.elevated`  | `#FFFFFF` | Modals, dropdowns, popovers      |
 
 ### Light mode — text
 
-| Token | Hex | Usage |
-|---|---|---|
-| `text.primary` | `#1D1C1A` | Headings, primary content |
-| `text.secondary` | `#96938E` | Supporting copy, labels, meta |
-| `text.tertiary` | `#6B6A66` | Captions, timestamps, disabled |
+| Token            | Hex       | Usage                          |
+| ---------------- | --------- | ------------------------------ |
+| `text.primary`   | `#1D1C1A` | Headings, primary content      |
+| `text.secondary` | `#96938E` | Supporting copy, labels, meta  |
+| `text.tertiary`  | `#6B6A66` | Captions, timestamps, disabled |
 
 ### Dark mode — backgrounds (hero / dark sections)
 
-| Token | Hex | Usage |
-|---|---|---|
-| `bg.dark.primary` | `#1D1C1A` | Dark section background |
-| `bg.dark.secondary` | `#201F1D` | Cards on dark — border: `#282725` |
-| `bg.dark.tertiary` | `#282725` | Nested surfaces — border: `#383837` |
+| Token               | Hex       | Usage                               |
+| ------------------- | --------- | ----------------------------------- |
+| `bg.dark.primary`   | `#1D1C1A` | Dark section background             |
+| `bg.dark.secondary` | `#201F1D` | Cards on dark — border: `#282725`   |
+| `bg.dark.tertiary`  | `#282725` | Nested surfaces — border: `#383837` |
 
 ### Dark mode — text
 
-| Token | Hex | Usage |
-|---|---|---|
-| `text.dark.primary` | `#E4DDD7` | Primary content on dark |
-| `text.dark.secondary` | `#96938E` | Supporting copy on dark |
-| `text.dark.tertiary` | `#6B6A66` | Captions, disabled on dark |
+| Token                 | Hex       | Usage                      |
+| --------------------- | --------- | -------------------------- |
+| `text.dark.primary`   | `#E4DDD7` | Primary content on dark    |
+| `text.dark.secondary` | `#96938E` | Supporting copy on dark    |
+| `text.dark.tertiary`  | `#6B6A66` | Captions, disabled on dark |
 
 ### Accent
 
-| Name | Hex | Usage |
-|---|---|---|
+| Name                  | Hex       | Usage                                              |
+| --------------------- | --------- | -------------------------------------------------- |
 | Teal (primary accent) | `#00B97D` | Links, CTAs, active states, positive confirmations |
-| Teal surface | `#1B2A25` | Teal-tinted background (dark sections only) |
-| Gold | `#DCCFBA` | XAU₮ references, gold-specific UI elements |
+| Teal surface          | `#1B2A25` | Teal-tinted background (dark sections only)        |
+| Gold                  | `#DCCFBA` | XAU₮ references, gold-specific UI elements         |
 
 ### Borders
 
-| Token | Hex | Usage |
-|---|---|---|
-| `border.subtle` | `rgba(0,0,0,0.06)` | Card rings, default dividers |
-| `border.default` | `rgba(0,0,0,0.10)` | Hover states, inputs |
-| `border.dark.subtle` | `#282725` | Dividers on dark surfaces |
-| `border.dark.default` | `#383837` | Hover states on dark |
+| Token                 | Hex                | Usage                        |
+| --------------------- | ------------------ | ---------------------------- |
+| `border.subtle`       | `rgba(0,0,0,0.06)` | Card rings, default dividers |
+| `border.default`      | `rgba(0,0,0,0.10)` | Hover states, inputs         |
+| `border.dark.subtle`  | `#282725`          | Dividers on dark surfaces    |
+| `border.dark.default` | `#383837`          | Hover states on dark         |
 
 ---
 
@@ -136,16 +136,16 @@ Single font family throughout.
 
 ### Type scale
 
-| Role | Weight | Size | Usage |
-|---|---|---|---|
-| Hero headline | Medium 500 | 40–52px | Landing page hero only |
-| H1 | Medium 500 | 28–32px | Page titles |
-| H2 | Medium 500 | 20–24px | Section headings |
-| H3 | Medium 500 | 16–18px | Feature headings, card titles |
-| Body | Regular 400 | 15–16px | Paragraphs, descriptions |
-| Label / UI | Medium 500 | 13–14px | Buttons, nav, badges |
-| Caption / meta | Regular 400 | 12–13px | Timestamps, secondary info |
-| Numerical values | Medium 500 | contextual | Balances, prices, amounts |
+| Role             | Weight      | Size       | Usage                         |
+| ---------------- | ----------- | ---------- | ----------------------------- |
+| Hero headline    | Medium 500  | 40–52px    | Landing page hero only        |
+| H1               | Medium 500  | 28–32px    | Page titles                   |
+| H2               | Medium 500  | 20–24px    | Section headings              |
+| H3               | Medium 500  | 16–18px    | Feature headings, card titles |
+| Body             | Regular 400 | 15–16px    | Paragraphs, descriptions      |
+| Label / UI       | Medium 500  | 13–14px    | Buttons, nav, badges          |
+| Caption / meta   | Regular 400 | 12–13px    | Timestamps, secondary info    |
+| Numerical values | Medium 500  | contextual | Balances, prices, amounts     |
 
 **Rule:** numerical values (prices, balances, amounts) always use Medium 500. Never Regular for numbers that matter.
 
@@ -170,14 +170,14 @@ See `brand_voice.md` for the full guide. Summary:
 
 **Write like a technically literate private banker.** Calm, precise, no hype.
 
-| Use | Avoid |
-|---|---|
-| "Auric bought" | "Your order was filled" |
-| "Rule executed" | "Bot triggered" |
-| "Accumulating XAU₮" | "Portfolio rebalancing" |
-| "Gold savings" | "Asset diversification" |
-| "Set it once" | "Fully automated" (overclaims) |
-| Exact numbers | Vague outcomes |
+| Use                 | Avoid                          |
+| ------------------- | ------------------------------ |
+| "Auric bought"      | "Your order was filled"        |
+| "Rule executed"     | "Bot triggered"                |
+| "Accumulating XAU₮" | "Portfolio rebalancing"        |
+| "Gold savings"      | "Asset diversification"        |
+| "Set it once"       | "Fully automated" (overclaims) |
+| Exact numbers       | Vague outcomes                 |
 
 **Never use:** trading bot language, "AI-powered" as a lead, rocket/moon references, "HODL", crypto-bro tone, exclamation marks.
 
@@ -185,13 +185,13 @@ See `brand_voice.md` for the full guide. Summary:
 
 ## What Auric Is Not
 
-| Not this | Because |
-|---|---|
-| A trading bot | Bots speculate. Auric executes your accumulation rules. |
-| A DeFi protocol | It's simple savings infrastructure, not yield farming. |
-| An AI product | Auric evaluates your rules. AI is not the pitch. |
-| A portfolio manager | Single asset, single purpose: XAU₮ accumulation. |
-| An alert service | It executes, not just notifies. |
+| Not this            | Because                                                 |
+| ------------------- | ------------------------------------------------------- |
+| A trading bot       | Bots speculate. Auric executes your accumulation rules. |
+| A DeFi protocol     | It's simple savings infrastructure, not yield farming.  |
+| An AI product       | Auric evaluates your rules. AI is not the pitch.        |
+| A portfolio manager | Single asset, single purpose: XAU₮ accumulation.        |
+| An alert service    | It executes, not just notifies.                         |
 
 ---
 
