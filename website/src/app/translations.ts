@@ -5,20 +5,20 @@ export const t = {
     howItWorks: { en: "How it works", es: "Como funciona" },
     features: { en: "Features", es: "Funciones" },
     whyXaut: { en: "Why XAU\u20AE", es: "Por que XAU\u20AE" },
-    cta: { en: "Start Accumulating \u2192", es: "Empieza a Acumular \u2192" },
+    cta: { en: "Start Saving \u2192", es: "Empieza a Ahorrar \u2192" },
     ctaMobile: { en: "Get Started \u2192", es: "Empezar \u2192" },
   },
 
   hero: {
     headline: {
-      en: "Gold that works while you sleep.",
-      es: "Oro que trabaja mientras duermes.",
+      en: "Gold savings while you sleep.",
+      es: "Ahorra en oro mientras duermes.",
     },
     sub: {
       en: "Set your rules once. Auric watches XAU\u20AE markets and acts when your conditions are met \u2014 no charts, no alerts, no manual trades.",
       es: "Define tus reglas una vez. Auric monitorea XAU\u20AE y actua cuando se cumplen tus condiciones \u2014 sin graficos, sin alertas, sin trades manuales.",
     },
-    cta: { en: "Start Accumulating", es: "Empieza a Acumular" },
+    cta: { en: "Start Saving", es: "Empieza a Ahorrar" },
   },
 
   features: {
