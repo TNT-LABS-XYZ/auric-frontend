@@ -37,10 +37,12 @@ export function BalanceSection({
   balance,
   price,
   executions,
+  showDepositCta = false,
 }: {
   balance: { xaut: number; usdt: number } | null
   price: number | null
   executions: Execution[]
+  showDepositCta?: boolean
 }) {
   const xautHeld = balance?.xaut ?? 0
   const usdtAvailable = balance?.usdt ?? 0
@@ -114,9 +116,38 @@ export function BalanceSection({
         />
       </div>
 
+      {/* Deposit CTA — shown when zero balance and no plans */}
+      {showDepositCta && (
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 10,
+          padding: '10px var(--space-3)',
+          borderTop: '1px solid var(--border-rule)',
+          borderBottom: '1px solid var(--border-rule)',
+          background: 'rgba(201,148,42,.03)',
+        }}>
+          <div style={{
+            width: 22, height: 22, borderRadius: 6,
+            background: 'rgba(201,148,42,.1)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+          }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c9942a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+          </div>
+          <div>
+            <p style={{ fontSize: 13, fontWeight: 'var(--weight-ui)', color: 'var(--gold)', letterSpacing: '-0.006em', margin: 0 }}>
+              Deposit USDT to get started
+            </p>
+            <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: '1px 0 0', letterSpacing: '-0.006em' }}>
+              Gas is sponsored. Send to your wallet address below.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Footer row: USDT available + XAUT price */}
       <div style={{
-        borderTop: '1px solid var(--border-rule)',
+        borderTop: showDepositCta ? 'none' : '1px solid var(--border-rule)',
         padding: '10px var(--space-3)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
@@ -135,7 +166,14 @@ export function BalanceSection({
           </span>
         </div>
         {price != null && (
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
+          <a
+            href="https://www.coingecko.com/en/coins/tether-gold"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'flex', alignItems: 'baseline', gap: 5, textDecoration: 'none', transition: 'opacity 0.15s ease' }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.7' }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
+          >
             <span style={{
               fontSize: 13, fontWeight: 'var(--weight-heading)',
               color: 'var(--text-mid)', letterSpacing: '-0.02em',
@@ -148,7 +186,7 @@ export function BalanceSection({
             }}>
               XAUT price
             </span>
-          </div>
+          </a>
         )}
       </div>
     </motion.div>
