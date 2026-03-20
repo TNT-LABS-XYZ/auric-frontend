@@ -117,6 +117,68 @@ function GoalVisual() {
   );
 }
 
+function SmartDcaVisual() {
+  const bars = [
+    { base: 40, weight: +20, label: "+20%" },
+    { base: 40, weight: 0, label: "" },
+    { base: 40, weight: -30, label: "-30%" },
+    { base: 40, weight: +15, label: "+15%" },
+    { base: 40, weight: 0, label: "" },
+    { base: 40, weight: +25, label: "+25%" },
+    { base: 40, weight: -20, label: "-20%" },
+    { base: 40, weight: 0, label: "" },
+  ];
+  const weeks = ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"];
+  return (
+    <div className="w-full lg:w-[421px] shrink-0 backdrop-blur-xl bg-[rgba(32,31,29,0.81)] rounded-b-2xl lg:rounded-br-none lg:rounded-l-2xl overflow-hidden px-[23px] py-[19px] flex flex-col justify-between min-h-[200px]">
+      <div className="flex gap-2 items-center justify-between">
+        <div className="flex gap-2 items-center">
+          <Image src="/images/schedule-icon.svg" alt="" width={16} height={16} />
+          <span className="text-sm font-medium text-[#96938e]">Smart DCA</span>
+        </div>
+        <span className="text-xs font-medium text-[#96938e] opacity-60">adaptive</span>
+      </div>
+      <div className="flex items-end gap-[6px] w-full mt-6 relative">
+        {/* avg cost dashed line */}
+        <div className="absolute left-0 right-0 border-t border-dashed border-[rgba(228,221,215,0.25)]" style={{ bottom: 40 }} />
+        <span className="absolute right-0 text-[9px] font-medium text-[#96938e] opacity-50" style={{ bottom: 42 }}>avg $4,612</span>
+        {bars.map((b, i) => {
+          const h = b.base + (b.base * b.weight / 100);
+          const isUp = b.weight > 0;
+          const isDown = b.weight < 0;
+          return (
+            <div key={i} className="flex-1 flex flex-col items-center gap-1">
+              {b.label && (
+                <span className={`text-[9px] font-medium ${isUp ? "text-[#7ecb8b]" : "text-[#cb7e7e]"}`}>
+                  {b.label}
+                </span>
+              )}
+              <div
+                className="w-full rounded-md"
+                style={{
+                  height: h,
+                  background: isUp
+                    ? "linear-gradient(to bottom, rgba(126,203,139,0.35), rgba(126,203,139,0.08))"
+                    : isDown
+                    ? "linear-gradient(to bottom, rgba(203,126,126,0.35), rgba(203,126,126,0.08))"
+                    : "linear-gradient(to bottom, rgba(255,255,255,0.06), rgba(153,153,153,0.06))",
+                }}
+              />
+              <span className="text-[9px] font-medium text-[#96938e] opacity-50">{weeks[i]}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex items-end justify-between w-full mt-4">
+        <p className="text-xl font-medium text-[#e4ddd7]">$50 / week</p>
+        <p className="text-sm font-medium text-[#96938e]">
+          Next: checking market
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function TelegramVisual() {
   return (
     <div className="w-full lg:w-[421px] shrink-0 backdrop-blur-xl bg-[rgba(32,31,29,0.81)] rounded-b-2xl lg:rounded-br-none lg:rounded-l-2xl overflow-hidden px-[23px] py-[19px] flex flex-col gap-6 h-[272px]">
@@ -304,6 +366,22 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col gap-12 md:gap-[88px]">
+          {/* Smart DCA */}
+          <div className="flex flex-col-reverse lg:flex-row lg:items-stretch w-full">
+            <SmartDcaVisual />
+            <div className="flex-1 flex flex-col gap-4 p-6 md:p-10 bg-[#fcfcfb] rounded-t-2xl lg:rounded-tl-none lg:rounded-r-2xl min-w-0">
+              <h3 className="text-2xl md:text-[32px] font-medium leading-normal text-[#201f1d]">
+                {l(t.features.smartDca.title)}
+              </h3>
+              <p className="text-base text-[#939393] tracking-[-0.16px] leading-normal">
+                {l(t.features.smartDca.desc)}
+              </p>
+              <CheckItem>{l(t.features.smartDca.check1)}</CheckItem>
+              <CheckItem>{l(t.features.smartDca.check2)}</CheckItem>
+              <CheckItem>{l(t.features.smartDca.check3)}</CheckItem>
+            </div>
+          </div>
+
           {/* DCA Schedules */}
           <div className="flex flex-col lg:flex-row lg:items-stretch w-full">
             <div className="flex-1 flex flex-col gap-4 p-6 md:p-10 bg-[#fcfcfb] rounded-t-2xl lg:rounded-tr-none lg:rounded-l-2xl min-w-0">
