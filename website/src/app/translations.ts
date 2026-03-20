@@ -88,6 +88,26 @@ export const t = {
       },
     },
 
+    smartDca: {
+      title: { en: "Smart DCA", es: "DCA inteligente" },
+      desc: {
+        en: "Same schedule, smarter sizing. Auric checks market conditions before each buy \u2014 if gold dipped, it buys more. If the price ran past your average, it dials back.",
+        es: "Mismo calendario, mejor ejecucion. Auric revisa el mercado antes de cada compra \u2014 si el oro bajo, compra mas. Si el precio supero tu promedio, reduce el monto.",
+      },
+      check1: {
+        en: "Adjusts buy size based on market conditions at execution time",
+        es: "Ajusta el monto segun las condiciones del mercado al momento de ejecutar",
+      },
+      check2: {
+        en: "Buys more on red days, less when price is above your average",
+        es: "Compra mas en dias rojos, menos cuando el precio supera tu promedio",
+      },
+      check3: {
+        en: "Same schedule, same budget ceiling \u2014 just better entries",
+        es: "Mismo calendario, mismo presupuesto \u2014 mejores puntos de entrada",
+      },
+    },
+
     telegram: {
       title: { en: "Telegram interface", es: "Interfaz en Telegram" },
       desc: {
