@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   type WalletBalance,
   type Strategy,
@@ -48,6 +49,7 @@ export default function Dashboard({
     balance != null && balance.xaut === 0 && balance.usdt === 0;
   const hasActivePlans = visibleStrategies.some((s) => s.status === "active");
   const walletAddress = account?.smart_account_address ?? "";
+  const [networkBannerDismissed, setNetworkBannerDismissed] = useState(false);
 
   return (
     <div style={{ minHeight: "100svh", background: "var(--bg)" }}>
@@ -173,6 +175,87 @@ export default function Dashboard({
             onPause={pauseStrategy}
             onResume={resumeStrategy}
           />
+          {/* Network info banner */}
+          <AnimatePresence>
+            {!networkBannerDismissed && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "10px 14px",
+                  borderRadius: 10,
+                  background: "rgba(100,116,139,.05)",
+                  border: "1px solid rgba(100,116,139,.12)",
+                }}
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#64748b"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ flexShrink: 0 }}
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "var(--text-muted)",
+                    letterSpacing: "-0.006em",
+                    margin: 0,
+                    lineHeight: 1.4,
+                    flex: 1,
+                  }}
+                >
+                  This app supports USDT and XAU₮ on{" "}
+                  <span style={{ fontWeight: 600, color: "var(--text-mid)" }}>
+                    Ethereum mainnet
+                  </span>{" "}
+                  only. Deposits from other networks will not be credited.
+                </p>
+                <button
+                  onClick={() => setNetworkBannerDismissed(true)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 4,
+                    flexShrink: 0,
+                    color: "#94a3b8",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  aria-label="Dismiss"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <AccountSection
             walletAddress={account?.smart_account_address ?? ""}
             accessToken={accessToken}
