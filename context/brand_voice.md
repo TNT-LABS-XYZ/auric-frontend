@@ -10,13 +10,13 @@ An autonomous gold savings engine. Users define a rule once — DCA, price trigg
 
 **Gold doesn't shout.** Auric is quiet, precise, and dependable — the opposite of crypto exchange energy.
 
-| Trait | Expression |
-|---|---|
-| Calm confidence | Statements, not exclamations. Present tense, active voice. |
-| Precision | Exact numbers, specific outcomes. Never vague about what happens. |
-| Patient | Long-horizon framing. Accumulation over time, not quick wins. |
-| Trustworthy | Show the work. Notifications confirm what executed, not what might. |
-| Understated | No hype, no urgency theater, no "🚀" culture. |
+| Trait           | Expression                                                          |
+| --------------- | ------------------------------------------------------------------- |
+| Calm confidence | Statements, not exclamations. Present tense, active voice.          |
+| Precision       | Exact numbers, specific outcomes. Never vague about what happens.   |
+| Patient         | Long-horizon framing. Accumulation over time, not quick wins.       |
+| Trustworthy     | Show the work. Notifications confirm what executed, not what might. |
+| Understated     | No hype, no urgency theater, no "🚀" culture.                       |
 
 ---
 
@@ -35,26 +35,31 @@ An autonomous gold savings engine. Users define a rule once — DCA, price trigg
 ## Tone by context
 
 ### Landing page / marketing
+
 Warm, editorial, direct. Explains the insight (USDT is already trusted in LATAM — XAU₮ is the next step) without lecturing. Makes gold savings feel inevitable, not exotic.
 
 > You already hold USDT against inflation. Auric converts it into gold — automatically, when the conditions you set are met.
 
 ### Bot onboarding
+
 Welcoming, step-by-step, no jargon overload. Assumes crypto literacy but not DeFi depth. Confirms each action before executing.
 
 > Welcome to Auric. I accumulate XAU₮ for you using rules you define. Set it once, I handle the rest.
 
 ### Bot confirmations / notifications
+
 Factual, immediate, complete. Every notification answers: what happened, at what price, how much.
 
 > ✓ Bought 0.009 XAU₮ at $3,241.80 · DCA rule · USDT balance: 47.20
 
 ### Error states
+
 Honest and actionable. Never blame the user. State the problem, state the fix.
 
 > Insufficient USDT balance to execute. Fund your wallet and the rule will retry at the next interval.
 
 ### Empty states
+
 Brief and inviting. Tell the user what becomes possible, not what's missing.
 
 > No rules yet. Set your first strategy below.
@@ -82,15 +87,15 @@ The most compelling copy Auric can write is a trade confirmation with a real num
 
 ## What to avoid
 
-| Avoid | Use instead |
-|---|---|
-| "Revolutionary" / "game-changing" | Show the outcome |
-| Rocket emojis, moon references | ✓ checkmarks, clean numerals |
-| "HODL", "ape in", trading slang | "hold", "accumulate", "save" |
-| Passive voice | Active: "Auric executed…" |
-| Vague time references ("soon") | Specific: "next interval", "daily at 09:00" |
-| Over-explaining crypto mechanics | Assume USDT familiarity, explain XAU₮ once |
-| Exclamation marks | Full stop. Let the result be exciting. |
+| Avoid                             | Use instead                                 |
+| --------------------------------- | ------------------------------------------- |
+| "Revolutionary" / "game-changing" | Show the outcome                            |
+| Rocket emojis, moon references    | ✓ checkmarks, clean numerals                |
+| "HODL", "ape in", trading slang   | "hold", "accumulate", "save"                |
+| Passive voice                     | Active: "Auric executed…"                   |
+| Vague time references ("soon")    | Specific: "next interval", "daily at 09:00" |
+| Over-explaining crypto mechanics  | Assume USDT familiarity, explain XAU₮ once  |
+| Exclamation marks                 | Full stop. Let the result be exciting.      |
 
 ---
 
@@ -106,22 +111,29 @@ The most compelling copy Auric can write is a trade confirmation with a real num
 ## Sample copy
 
 ### Hero headline (landing page)
+
 > Gold savings on autopilot.
 
 ### Sub-headline
+
 > Set your strategy. Auric converts USDT to XAU₮ when your conditions are met — silently, on-chain.
 
 ### CTA
+
 > Open in Telegram
 
 ### Bot welcome
+
 > Hey. I'm Auric — an autonomous savings engine for XAU₮. Tell me your strategy and I'll handle the rest. Want to start with DCA, a price target, or a savings goal?
 
 ### Trade notification
+
 > ✓ DCA executed · Bought 0.014 XAU₮ · Price $3,198 · USDT spent: 44.77
 
 ### Withdrawal confirmation request
+
 > Withdraw 0.05 XAU₮ to your external wallet? This is irreversible.
 
 ### Empty history
+
 > No executions yet. Your rules are active and monitoring.
