@@ -47,7 +47,9 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}>
+      <body
+        className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}
+      >
         <Auth0ProviderWrapper>{children}</Auth0ProviderWrapper>
       </body>
     </html>

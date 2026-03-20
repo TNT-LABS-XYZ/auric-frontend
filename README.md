@@ -52,12 +52,12 @@ Copy the example file and fill in the values:
 cp .env.local.example .env.local
 ```
 
-| Variable | Description |
-|---|---|
-| `NEXT_PUBLIC_API_URL` | Backend base URL visible to the browser (e.g. `http://localhost:3002`) |
-| `NEXT_PUBLIC_TELEGRAM_BOT` | Telegram bot username (without `@`) |
-| `BACKEND_URL` | Backend base URL for server-side calls (usually same as above) |
-| `OPERATOR_API_KEY` | Server-side key used by the account creation API route |
+| Variable                   | Description                                                            |
+| -------------------------- | ---------------------------------------------------------------------- |
+| `NEXT_PUBLIC_API_URL`      | Backend base URL visible to the browser (e.g. `http://localhost:3002`) |
+| `NEXT_PUBLIC_TELEGRAM_BOT` | Telegram bot username (without `@`)                                    |
+| `BACKEND_URL`              | Backend base URL for server-side calls (usually same as above)         |
+| `OPERATOR_API_KEY`         | Server-side key used by the account creation API route                 |
 
 ### 3. Start the dev server
 
