@@ -8,7 +8,7 @@
 
 Auric is an **autonomous gold savings engine**. Users define a rule once — DCA, price trigger, or savings goal — and Auric monitors XAU₮ markets, evaluates conditions, and executes USDT → XAU₮ on-chain via Tether's WDK. No manual intervention after setup. Primary interface: Telegram bot.
 
-**Tagline:** Gold that works while you sleep.
+**Tagline:** Gold savings while you sleep.
 
 **One-liner:** Set your accumulation rules once. Auric monitors XAU₮ markets, evaluates your conditions, and executes on-chain — while you sleep.
 

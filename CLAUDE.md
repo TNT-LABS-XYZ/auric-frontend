@@ -202,7 +202,7 @@ Auric is built by **TNT Labs** for the Tether WDK hackathon.
 - "Approve" / "confirm"
 - "Acts when you'd act"
 - "Watches while you sleep"
-- "Gold that works while you sleep" (primary headline)
+- "Gold savings while you sleep" (primary headline)
 
 **Never use:**
 
