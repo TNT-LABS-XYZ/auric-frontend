@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { EB_Garamond } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Auth0ProviderWrapper from "./auth0-provider";
 
@@ -32,9 +33,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}
-      >
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-V6XE7N3BG7"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-V6XE7N3BG7');
+          `}
+        </Script>
+      </head>
+      <body className={`${interDisplay.variable} ${ebGaramond.variable} antialiased`}>
         <Auth0ProviderWrapper>{children}</Auth0ProviderWrapper>
       </body>
     </html>
